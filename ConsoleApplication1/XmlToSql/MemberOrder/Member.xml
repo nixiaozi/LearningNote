@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Member type="select">
+  <select Age="Age" Name="Name" Job="Job">
+    
+  </select>
+  <where>
+    <Max Age="{{0}}"></Max>
+    <Min Age="{{1}}"></Min>
+    <In>
+      <Name>
+        {{2}}
+      </Name>
+    </In>
+    <NotIn>
+      <Name>
+        {{3}}
+      </Name>
+    </NotIn>
+    <Like>
+      {{4}}
+    </Like>
+  </where>
+</Member>

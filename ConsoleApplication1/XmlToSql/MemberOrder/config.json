@@ -1,0 +1,20 @@
+﻿{
+  "TableOrders": [
+    "Order",
+    "Member" 
+  ],
+  "JoinOrders": [
+    "left join"
+  ],
+  "JoinConditions": [
+    "{0}.MemberId=Member.Id and {1}.Age>9",
+  ],
+  "Params": [
+    {
+
+    },
+    {
+
+    }
+  ]
+}
