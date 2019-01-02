@@ -20,7 +20,8 @@ namespace ConsoleApplication1
 
             //TaskBase 任务
             //BaseTaskExample.MainAction();
-            BaseTaskExample.TaskRunAction();
+            //BaseTaskExample.TaskRunAction();
+            BaseTaskExample.TaskFactoryStartAction();
 
 
 
