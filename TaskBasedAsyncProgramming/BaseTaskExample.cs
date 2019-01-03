@@ -207,6 +207,9 @@ namespace TaskBasedAsyncProgramming
             var t2 = new Task<string>(formatDelegate);
             t2.RunSynchronously();
             Console.WriteLine(t2.Result);
+
+            // 这个实例说明：task所使用的culture只与所在的线程相关；新的线程会重新使用app默认的culture
+
         }
 
     }
