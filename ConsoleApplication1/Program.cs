@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskBasedAsyncProgramming;
 
-namespace ConsoleApplication1
+namespace TestConsole
 {
     class Program
     {
@@ -21,8 +21,10 @@ namespace ConsoleApplication1
             //TaskBase 任务
             //BaseTaskExample.MainAction();
             //BaseTaskExample.TaskRunAction();
-            BaseTaskExample.TaskFactoryStartAction();
-
+            //BaseTaskExample.TaskFactoryStartAction();
+            //BaseTaskExample.ComputeMutliTaskResultAction();
+            //BaseTaskExample.LambdaCaptureOutExpectedExp();
+            BaseTaskExample.UseAsyncStateForTask();
 
 
             Console.WriteLine("按任意键退出！");
