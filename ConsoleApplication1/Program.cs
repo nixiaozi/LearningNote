@@ -25,7 +25,10 @@ namespace TestConsole
             //BaseTaskExample.ComputeMutliTaskResultAction();
             //BaseTaskExample.LambdaCaptureOutExpectedExp();
             //BaseTaskExample.UseAsyncStateForTask();
-            BaseTaskExample.TaskCultureCustomization();
+            //BaseTaskExample.TaskCultureCustomization();
+            //BaseTaskExample.ContinuationsTaskExp();
+            //BaseTaskExample.ChainTypeContinuationsTask();
+            BaseTaskExample.DetachedChildTasks();
 
 
             Console.WriteLine("按任意键退出！");

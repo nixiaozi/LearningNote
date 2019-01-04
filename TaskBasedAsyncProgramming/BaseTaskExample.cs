@@ -212,6 +212,103 @@ namespace TaskBasedAsyncProgramming
 
         }
 
+        public static void ContinuationsTaskExp()
+        {
+            var getData = Task.Factory.StartNew(() =>
+            {
+                Random rnd = new Random();
+                int[] values = new int[100];
+                for (int ctr = 0; ctr <= values.GetUpperBound(0); ctr++)
+                    values[ctr] = rnd.Next();
+
+                return values;
+            });
+            var processData = getData.ContinueWith((x) =>
+            {
+                int n = x.Result.Length;
+                long sum = 0;
+                double mean;
+
+                for (int ctr = 0; ctr <= x.Result.GetUpperBound(0); ctr++)
+                    sum += x.Result[ctr];
+
+                mean = sum / (double)n;
+                return Tuple.Create(n, sum, mean);
+            });
+            var displayData = processData.ContinueWith((x) =>
+            {
+                return String.Format("N={0:N0},Total={1:N0},mean={2:N2}", x.Result.Item1, x.Result.Item2, x.Result.Item3);
+            });
+            Console.WriteLine(displayData.Result);
+        }
+
+        public static void ChainTypeContinuationsTask()
+        {
+            //The ContinueWhenAll and ContinueWhenAny methods enable you to continue from multiple tasks.
+            var displayData = Task.Factory.StartNew(() =>
+            {
+                Random rnd = new Random();
+                int[] values = new int[100];
+                for (int ctr = 0; ctr <= values.GetUpperBound(0); ctr++)
+                    values[ctr] = rnd.Next();
+                return values;
+            })
+            .ContinueWith((x) =>
+            {
+                int n = x.Result.Length;
+                long sum = 0;
+                double mean;
+                for (int ctr = 0; ctr <= x.Result.GetUpperBound(0); ctr++)
+                    sum += x.Result[ctr];
+                mean = sum / (double)n;
+                return Tuple.Create(n, sum, mean);
+            })
+            .ContinueWith((x) =>
+            {
+                return String.Format("N={0:N0}, Total = {1:N0}, Mean = {2:N2}",
+                    x.Result.Item1, x.Result.Item2,
+                    x.Result.Item3);
+            });
+            Console.WriteLine(displayData.Result);
+        }
+
+        public static void DetachedChildTasks()
+        {
+            var outer = Task.Factory.StartNew(() => {
+                Console.WriteLine("Outer task beginning.");
+                //父任务只会掉起该子任务，并继续向下执行，不会等到子任务完成
+                var child = Task.Factory.StartNew(() =>
+                {
+                    Thread.SpinWait(5000000);
+                    Console.WriteLine("Detached task completed.");
+                });
+            });
+            // outer.RunSynchronously(); 不能对已开始的任务调用 RunSynchronously
+            outer.Wait();
+            Console.WriteLine("Outer task completed.");
+        }
+
+        public static void AttachedToParentTasks()
+        {
+            //A parent task can use the TaskCreationOptions.DenyChildAttach option to prevent other tasks from attaching to
+            //the parent task.For more information, see Attached and Detached Child Tasks.
+            var parent = Task.Factory.StartNew(() => {
+                Console.WriteLine("Parent task beginning.");
+                for (int ctr = 0; ctr < 10; ctr++)
+                {
+                    int taskNo = ctr;
+                    Task.Factory.StartNew((x) => {
+                        Thread.SpinWait(5000000);
+                        Console.WriteLine("Attached child #{0} completed.",
+                        x);
+                    },
+                    taskNo, TaskCreationOptions.AttachedToParent);
+                }
+            });
+            parent.Wait();
+            Console.WriteLine("Parent task completed.");
+        }
+
     }
     class CustomData
     {
