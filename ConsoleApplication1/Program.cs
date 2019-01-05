@@ -28,7 +28,10 @@ namespace TestConsole
             //BaseTaskExample.TaskCultureCustomization();
             //BaseTaskExample.ContinuationsTaskExp();
             //BaseTaskExample.ChainTypeContinuationsTask();
-            BaseTaskExample.DetachedChildTasks();
+            //BaseTaskExample.DetachedChildTasks();
+
+            //ChainingContinuationTask
+            ChainingContinuationTask.ContinuationSingleAntecedcent();
 
 
             Console.WriteLine("按任意键退出！");
