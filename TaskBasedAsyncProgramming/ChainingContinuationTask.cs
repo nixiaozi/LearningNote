@@ -26,10 +26,32 @@ namespace TaskBasedAsyncProgramming
             //typically call all but the Task.WhenAll(IEnumerable<Task>) and Task.WhenAll(Task[]) methods to retrieve the
             //returned Task< TResult >.Result property, which does block the calling thread. 
             //Task.WhenAll 与Task.WhenAny 不会自动阻塞主线程，只有在方法中调用Task.Result时才会阻塞主线程。
+            List<Task<int>> tasks = new List<Task<int>>();
+            for(int ctr = 1; ctr <= 10; ctr++)
+            {
+                int baseValue = ctr;
+                tasks.Add(Task.Factory.StartNew((b) =>
+                {
+                    int i = (int)b;
+                    return i * i;
+                }, baseValue));
+            }
+            //var continuation = Task.WhenAny(tasks);
+            //如果使用WhenAny,会出现什么情况？
+            //WhenAny 只会放回单一结果,并非int数组
+            var continuation = Task.WhenAll(tasks);
 
-
+            long sum = 0;
+            for(int ctr = 0; ctr <= continuation.Result.Length - 1; ctr++)
+            {
+                Console.Write("{0} {1}", continuation.Result[ctr], ctr == continuation.Result.Length - 1 ? "=" : "+");
+                sum += continuation.Result[ctr];
+            }
+            Console.WriteLine(sum);
 
         }
+
+
 
     }
 }

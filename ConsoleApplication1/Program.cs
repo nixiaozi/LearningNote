@@ -31,7 +31,8 @@ namespace TestConsole
             //BaseTaskExample.DetachedChildTasks();
 
             //ChainingContinuationTask
-            ChainingContinuationTask.ContinuationSingleAntecedcent();
+            //ChainingContinuationTask.ContinuationSingleAntecedcent();
+            ChainingContinuationTask.ContinuationForMultipleAntecedents();
 
 
             Console.WriteLine("按任意键退出！");
