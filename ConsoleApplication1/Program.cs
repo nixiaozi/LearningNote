@@ -32,7 +32,11 @@ namespace TestConsole
 
             //ChainingContinuationTask
             //ChainingContinuationTask.ContinuationSingleAntecedcent();
-            ChainingContinuationTask.ContinuationForMultipleAntecedents();
+            //ChainingContinuationTask.ContinuationForMultipleAntecedents();
+            //ChainingContinuationTask.PassingDataContinuation();
+            //ChainingContinuationTask.PassingDataContinuationWithWait();
+            ChainingContinuationTask.CancelingContinuationExp();
+
 
 
             Console.WriteLine("按任意键退出！");
