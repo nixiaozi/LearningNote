@@ -222,5 +222,15 @@ namespace TaskBasedAsyncProgramming
 
         }
 
+        public static void CancelContinuationFromAntecedent()
+        {
+            var cts = new CancellationTokenSource();
+            CancellationToken token = cts.Token;
+            cts.Cancel();
+
+            var t = Task.FromCanceled(token);
+
+        }
+
     }
 }
