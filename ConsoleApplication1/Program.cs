@@ -35,7 +35,10 @@ namespace TestConsole
             //ChainingContinuationTask.ContinuationForMultipleAntecedents();
             //ChainingContinuationTask.PassingDataContinuation();
             //ChainingContinuationTask.PassingDataContinuationWithWait();
-            ChainingContinuationTask.CancelingContinuationExp();
+            //ChainingContinuationTask.CancelingContinuationExp();
+            //ChainingContinuationTask.CancelContinuationFromAntecedent();
+            //ChainingContinuationTask.ContinuationWithAntecedentChild();
+            ChainingContinuationTask.ContinuationWithAntDetachedChild();
 
 
 

@@ -9,6 +9,15 @@ namespace TaskBasedAsyncProgramming
 {
     public class ChainingContinuationTask
     {
+        public static DateTime DoWork()
+        {
+            //Simulate work by suspending the current thread
+            //for two seconds.
+            Thread.Sleep(2000);
+
+            //Return the current time.
+            return DateTime.Now;
+        }
         private static void Elapsed(object state)
         {
             CancellationTokenSource cts = state as CancellationTokenSource;
@@ -229,6 +238,97 @@ namespace TaskBasedAsyncProgramming
             cts.Cancel();
 
             var t = Task.FromCanceled(token);
+            var continuation = t.ContinueWith((antecedent) =>
+            {
+                Console.WriteLine("The continuation is running.");
+            },TaskContinuationOptions.NotOnCanceled);
+            //TaskContinuationOptions.NotOnCanceled  表示在父任务取消之后不会再执行子任务
+            //如果没有这个表示，则会无条件的执行该子任务
+            //A continuation does not run until the antecedent and all of its attached child tasks have completed.
+            //一个后续的任务会等待所有他所依赖的父集合中的子任务全部完成之后才会执行
+
+            try
+            {
+                t.Wait();
+            }
+            catch(AggregateException ae)
+            {
+                foreach(var ie in ae.InnerExceptions)
+                {
+                    Console.WriteLine("{0}:{1}", ie.GetType().Name, ie.Message);
+                }
+                Console.WriteLine();
+            }
+            finally
+            {
+                cts.Dispose();
+            }
+            Console.WriteLine("Task {0}: {1:G}", t.Id, t.Status);
+            Console.WriteLine("Task {0}: {1:G}", continuation.Id,continuation.Status);
+        }
+
+        public static void ContinuationWithAntecedentChild()
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                Console.WriteLine("Running antecedent task {0}...", Task.CurrentId);
+                Console.WriteLine("Launching attached child task...");
+                for (int ctr = 1; ctr <= 5; ctr++)
+                {
+                    int index = ctr;
+                    Task.Factory.StartNew((value) =>
+                    {
+                        Console.WriteLine("Attached child task #{0} running", value);
+                        Thread.Sleep(1000);
+                    }, index, TaskCreationOptions.AttachedToParent);
+                    //TaskCreationOptions.AttachedToParent 表示这几个子任务会附加到主任务
+                }
+                Console.WriteLine("Finished launching attached child tasks...");
+            });
+
+            //antecedent 自动获得t的引用
+            var continuation = t.ContinueWith((antecedent) =>
+            {
+                Console.WriteLine("Executing continuation of Task {0}", antecedent.Id);
+            });
+
+            continuation.Wait();
+
+        }
+
+        public static void ContinuationWithAntDetachedChild()
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                Console.WriteLine("Running antecedent task {0}...", Task.CurrentId);
+                Console.WriteLine("Launching attached child task...");
+                for (int ctr = 1; ctr <= 5; ctr++)
+                {
+                    int index = ctr;
+                    Task.Factory.StartNew((value) =>
+                    {
+                        Console.WriteLine("Attached child task #{0} running", value);
+                        Thread.Sleep(1000);
+                    }, index);
+                    //TaskCreationOptions.AttachedToParent 去掉后，不会自动附加到主任务
+                }
+                Console.WriteLine("Finished launching attached child tasks...");
+            });
+
+            //antecedent 自动获得t的引用
+            var continuation = t.ContinueWith((antecedent) =>
+            {
+                Console.WriteLine("Executing continuation of Task {0}", antecedent.Id);
+            });
+
+            continuation.Wait();
+        }
+
+        public static void AssociateStateWithContinuations()
+        {
+            //Start a root task that performs work.
+            Task<DateTime> t = Task<DateTime>.Run(delegate { return DoWork(); });
+
 
         }
 
