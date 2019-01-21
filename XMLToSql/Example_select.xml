@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<!-- 这是一个示例文件用于说明各项配置 -->
+<!-- 功能;查询用户获取-->
+<!-- 创建人：dd-->
+<!-- 创建时间：2018-02-01-->
+<XMLSql type="select">
+  <LastSelect Top="1000">
+    <!-- 需要考虑 * 通配符的问题 -->
+    <ID>My.ID</ID>
+    <Name>My.Name</Name>
+    <TotalEarn Func="Sum" WhenNull="0">
+      <Param>My.DailyEarn*30+My.OtherEarn</Param>
+    </TotalEarn>
+  </LastSelect>
+  <Table name="Person" Identity="My">
+    
+    <Join>
+      <Table name="Person" Identity="BestFriend" joinType="LeftJoin">
+        <Condition>
+          <Param>My.BestMatch=BestFriend.ID</Param>
+        </Condition>
+        <Select Top="100">
+          
+        </Select>
+        <Where>
+          <AndCheck>
+            <OrCheck>
+              <AndCheck>
+                
+              </AndCheck>
+            </OrCheck>
+          </AndCheck>
+          <OrCheck>
+            
+          </OrCheck>
+        </Where>
+        
+      </Table>
+    </Join>
+  </Table>
+  <Where>
+    <AndCheck>
+      
+    </AndCheck>
+    <OrCheck>
+      
+    </OrCheck>
+  </Where>
+  <GroupBy>
+    <Desc>My.ID</Desc>
+  </GroupBy>
+  <OrderBy>
+    
+  </OrderBy>
+</XMLSql>

@@ -327,8 +327,36 @@ namespace TaskBasedAsyncProgramming
         public static void AssociateStateWithContinuations()
         {
             //Start a root task that performs work.
-            Task<DateTime> t = Task<DateTime>.Run(delegate { return DoWork(); });
+            Task<DateTime> t = Task<DateTime>.Run(
+                delegate {
+                    //Task.Run 默认就会执行
+                    Console.WriteLine("这里会默认执行的！");
+                    return DoWork();
+                });
 
+            //Create a chain of continuation tasks,where each task is
+            //followed by another task that performs work.
+            List<Task<DateTime>> continuations = new List<Task<DateTime>>();
+
+            for(int i = 0; i < 5; i++)
+            {
+                //Provide the current time as the state of the continuation.
+                t = t.ContinueWith(delegate { return DoWork(); }, DateTime.Now); //这里的Datetime.Now标识当前的AsyncState
+                continuations.Add(t);
+            }
+
+            //Wait for the last task in the chain to complete.
+            t.Wait();
+
+            //Print the creation time of each continuation(the state object)
+            //and the completion time(the result of that task) to the console.
+            foreach(var continuation in continuations)
+            {
+                DateTime start = (DateTime)continuation.AsyncState;
+                DateTime end = continuation.Result;
+
+                Console.WriteLine("Task was created at {0} and finished at {1}", start.TimeOfDay, end.TimeOfDay);
+            }
 
         }
 
