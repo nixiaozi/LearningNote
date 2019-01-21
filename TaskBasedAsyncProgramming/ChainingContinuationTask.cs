@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -360,5 +361,54 @@ namespace TaskBasedAsyncProgramming
 
         }
 
+        public static void HandingExceptionsFromContinuations()
+        {
+            var task1 = Task<int>.Run(() =>
+            {
+                Console.WriteLine("Executing task {0}", Task.CurrentId);
+                return 54;
+            });
+
+            var continuation = task1.ContinueWith((antecedent) =>
+            {
+                Console.WriteLine("Executing continuation task {0}", Task.CurrentId);
+                Console.WriteLine("Value from antecedent:{0}", antecedent.Result);
+                throw new InvalidOperationException();
+            });
+
+            try
+            {
+                task1.Wait();
+                continuation.Wait();
+            }
+            catch(AggregateException ae)
+            {
+                foreach(var ex in ae.InnerExceptions)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+        }
+
+        public static void HandingAntecedentExceptionsFromContinuations()
+        {
+            var t = Task.Run(() =>
+            {
+                string s = File.ReadAllText(@"C:\NonexistentFile.txt");
+                return s;
+            });
+
+            var c = t.ContinueWith((antecedent) =>
+            {
+                //Get the antecedent's exception information.
+                foreach (var ex in antecedent.Exception.InnerExceptions)
+                {
+                    if (ex is FileNotFoundException)
+                        Console.WriteLine(ex.Message);
+                }
+            }, TaskContinuationOptions.OnlyOnFaulted);
+            c.Wait();
+        }
     }
 }

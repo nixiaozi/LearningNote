@@ -13,10 +13,5 @@ namespace XMLToSql
 
         }
 
-        public XMLToSql(string _xmlStr,bool )
-        {
-
-        }
-
     }
 }
