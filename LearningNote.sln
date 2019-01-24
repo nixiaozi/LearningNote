@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskBasedAsyncProgramming",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLToSql", "XMLToSql\XMLToSql.csproj", "{93A1A479-7334-400A-AD24-C1864AD90D14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammingRuleSummary", "ProgrammingRuleSummary\ProgrammingRuleSummary.csproj", "{0E841ACD-C76D-43C0-A1B9-B3E385DCAF7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{93A1A479-7334-400A-AD24-C1864AD90D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93A1A479-7334-400A-AD24-C1864AD90D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93A1A479-7334-400A-AD24-C1864AD90D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E841ACD-C76D-43C0-A1B9-B3E385DCAF7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E841ACD-C76D-43C0-A1B9-B3E385DCAF7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E841ACD-C76D-43C0-A1B9-B3E385DCAF7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E841ACD-C76D-43C0-A1B9-B3E385DCAF7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
