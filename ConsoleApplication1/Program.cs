@@ -41,7 +41,9 @@ namespace TestConsole
             //ChainingContinuationTask.ContinuationWithAntDetachedChild();
             //ChainingContinuationTask.AssociateStateWithContinuations();
             //ChainingContinuationTask.HandingExceptionsFromContinuations();
-            ChainingContinuationTask.HandingAntecedentExceptionsFromContinuations();
+            //ChainingContinuationTask.HandingAntecedentExceptionsFromContinuations();
+
+            AttachDetachedChildTask.TaskCancellation();
 
 
 

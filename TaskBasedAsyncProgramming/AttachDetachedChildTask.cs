@@ -60,5 +60,60 @@ namespace TaskBasedAsyncProgramming
             Console.WriteLine("Parent has completed.");
         }
 
+        public static void TaskCancellation()
+        {
+            var tokenSource2 = new CancellationTokenSource();
+            CancellationToken ct = tokenSource2.Token;
+
+            var task = Task.Factory.StartNew(() =>
+            {
+                //Wre we alread canceled?
+                ct.ThrowIfCancellationRequested();
+
+                Console.WriteLine("此时还没有发起取消任务");
+
+                bool moreToDo = true;
+                while (moreToDo)
+                {
+                    Console.WriteLine("循环内还没有发起取消任务");
+                    //Poll on this property if you have to do 
+                    //other cleanup before throwing.
+                    if (ct.IsCancellationRequested)
+                    {
+                        //Clean up hrer,then...
+                        ct.ThrowIfCancellationRequested();
+                    }
+                }
+            }, tokenSource2.Token);
+
+            //可以使用一个新的任务控制CancellationToken
+            var cancelTask = Task.Run(() =>
+            {
+                Thread.SpinWait(20000);
+                tokenSource2.Cancel();
+            });
+            //tokenSource2.Cancel(); 这样会立即执行
+
+            //Just continue on this thread, or Wait/WaitAll with try-catch;
+            try
+            {
+                task.Wait();
+                //tokenSource2.Cancel(); 由于前面一直在task.Wait,此代码不会执行
+            }
+            catch(AggregateException e)
+            {
+                foreach(var v in e.InnerExceptions)
+                {
+                    Console.WriteLine(e.Message + " " + v.Message);
+                }
+            }
+            finally
+            {
+                tokenSource2.Dispose();
+            }
+
+
+        }
+
     }
 }
