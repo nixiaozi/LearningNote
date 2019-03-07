@@ -107,6 +107,10 @@
       <Project>{d09f5ba2-242b-4c1e-807d-f3a618fd3f8a}</Project>
       <Name>TaskBasedAsyncProgramming</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaskParallelLibraryDataflow\TaskParallelLibraryDataflow.csproj">
+      <Project>{A984A28A-239D-43C4-AC8D-DD11B5296E61}</Project>
+      <Name>TaskParallelLibraryDataflow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

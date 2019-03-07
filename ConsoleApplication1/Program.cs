@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TaskBasedAsyncProgramming;
+using TaskParallelLibraryDataflow;
 
 namespace TestConsole
 {
@@ -43,7 +44,9 @@ namespace TestConsole
             //ChainingContinuationTask.HandingExceptionsFromContinuations();
             //ChainingContinuationTask.HandingAntecedentExceptionsFromContinuations();
 
-            AttachDetachedChildTask.TaskCancellation();
+            //AttachDetachedChildTask.TaskCancellation();
+
+            DataflowBlock.DataflowBlockExample();
 
 
 
