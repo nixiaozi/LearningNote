@@ -46,15 +46,17 @@ namespace TestConsole
 
             //AttachDetachedChildTask.TaskCancellation();
 
-            DataflowBlock.DataflowBlockExample();
-
+            //DataflowBlock.DataflowBlockExample();
+            //DataflowBlock.SimpleBufferBlockExample();
+            //DataflowBlock.SimpleBroadcastBlockExapmle();
+            //DataflowBlock.SimpleWriteOnceBlockExample();
+            //DataflowBlock.SimpleActionBlockExample();
+            DataflowBlock.SimpleTransformManyBlockExample();
 
 
             Console.WriteLine("按任意键退出！");
             Console.ReadKey();
         }
-
-        
     }
 
     public static class StringExtensions
