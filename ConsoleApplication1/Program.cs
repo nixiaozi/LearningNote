@@ -51,7 +51,10 @@ namespace TestConsole
             //DataflowBlock.SimpleBroadcastBlockExapmle();
             //DataflowBlock.SimpleWriteOnceBlockExample();
             //DataflowBlock.SimpleActionBlockExample();
-            DataflowBlock.SimpleTransformManyBlockExample();
+            //DataflowBlock.SimpleTransformManyBlockExample();
+            //DataflowBlock.SimpleBatchBlockExample();
+            //DataflowBlock.SimpleJoinBlockExample();
+                
 
 
             Console.WriteLine("按任意键退出！");

@@ -150,6 +150,107 @@ namespace TaskParallelLibraryDataflow
             }
         }
 
+        public static void SimpleBatchBlockExample()
+        {
+            //Create a BatchBlock<int object that holds ten
+            //elements per batch
+            var batchBlock = new BatchBlock<int>(10);
+
+            //Post several values to the block
+            for(int i = 0; i < 13; i++)
+            {
+                batchBlock.Post(i);
+            }
+            // Set the block to the completed state. This causes
+            // the block to propagate out any any remaining
+            // values as a final batch.
+            batchBlock.Complete();
+            // Print the sum of both batches.
+            Console.WriteLine("The sum of the elements in batch 1 is {0}.",
+            batchBlock.Receive().Sum());
+            Console.WriteLine("The sum of the elements in batch 2 is {0}.",
+            batchBlock.Receive().Sum());
+            //这个是把收到的数据按照批次发出的Block
+        }
+
+        public static void SimpleJoinBlockExample()
+        {
+            // Create a JoinBlock<int, int, char> object that requires
+            // two numbers and an operator.
+            var joinBlock = new JoinBlock<int, int, char>();
+            // Post two values to each target of the join.
+            joinBlock.Target1.Post(3);
+            joinBlock.Target1.Post(6);
+            joinBlock.Target2.Post(5);
+            joinBlock.Target2.Post(4);
+            joinBlock.Target3.Post('+');
+            joinBlock.Target3.Post('-');
+            // Receive each group of values and apply the operator part
+            // to the number parts.
+            for (int i = 0; i < 2; i++)
+            {
+                var data = joinBlock.Receive();
+                switch (data.Item3)
+                {
+                    case '+':
+                        Console.WriteLine("{0} + {1} = {2}",
+                        data.Item1, data.Item2, data.Item1 + data.Item2);
+                        break;
+                    case '-':
+                        Console.WriteLine("{0} - {1} = {2}",
+                        data.Item1, data.Item2, data.Item1 - data.Item2);
+                        break;
+                    default:
+                        Console.WriteLine("Unknown operator '{0}'.", data.Item3);
+                        break;
+                }
+            }
+        }
+
+        public static void SimpleBatchedJoinBlockExample()
+        {
+            // For demonstration, create a Func<int, int> that
+            // returns its argument, or throws ArgumentOutOfRangeException
+            // if the argument is less than zero.
+            Func<int, int> DoWork = n =>
+            {
+                if (n < 0)
+                    throw new ArgumentOutOfRangeException();
+                return n;
+            };
+            // Create a BatchedJoinBlock<int, Exception> object that holds
+            // seven elements per batch.
+            var batchedJoinBlock = new BatchedJoinBlock<int, Exception>(7);
+            // Post several items to the block.
+            foreach (int i in new int[] { 5, 6, -7, -22, 13, 55, 0 })
+            {
+                try
+                {
+                    // Post the result of the worker to the
+                    // first target of the block.
+                    batchedJoinBlock.Target1.Post(DoWork(i));
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    // If an error occurred, post the Exception to the
+                    // second target of the block.
+                    batchedJoinBlock.Target2.Post(e);
+                }
+            } 
+            // Read the results from the block.
+            var results = batchedJoinBlock.Receive();
+            // Print the results to the console.
+            // Print the results.
+            foreach (int n in results.Item1)
+            {
+                Console.WriteLine(n);
+            } 
+            // Print failures.
+            foreach (Exception e in results.Item2)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
 
     }
 }
