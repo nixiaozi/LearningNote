@@ -18,6 +18,9 @@
 	建立一个错误处理Service，使用回调方式处理错误
 	独立出专门的模板服务用来模板请求
 	Class的属性中是否可以使用await异步获取数据
+
+	后台定义更新域；前端获取更新域；前端提交域更新修改
+	域更新类型包括replace、append、reappend、remove、delete、partreplace;
 	
 	使用日志等级：
 	1、添加性能耗时测试+应用等级
