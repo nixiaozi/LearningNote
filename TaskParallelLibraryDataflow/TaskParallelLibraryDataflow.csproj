@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataflowBlock.cs" />
+    <Compile Include="DataflowProducerConsumer.cs" />
+    <Compile Include="ProducerConsumerDataflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

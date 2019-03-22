@@ -54,7 +54,11 @@ namespace TestConsole
             //DataflowBlock.SimpleTransformManyBlockExample();
             //DataflowBlock.SimpleBatchBlockExample();
             //DataflowBlock.SimpleJoinBlockExample();
-                
+
+            //ProducerConsumerDataflow.ProducerConsumerExample();
+            ProducerConsumerDataflow.ActionReveivesDataExample();
+
+
 
 
             Console.WriteLine("按任意键退出！");
