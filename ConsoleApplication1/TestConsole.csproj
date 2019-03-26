@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncDemo\EntityFrameworkAsyncTest.cs" />
     <Compile Include="AsyncDemo\Model.cs" />
     <Compile Include="AsyncDemo\PerformDatabaseOperations.cs" />
     <Compile Include="DateTimeToStr\MainAction.cs" />

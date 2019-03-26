@@ -16,6 +16,12 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
+            //PerformDatabaseOperations.TestOperations();  主线程会等待异步操作完成，可能是因为知道这是异步方法
+
+            EntityFrameworkAsyncTest.TestMutiLineInsert();
+
+
             //同步多线程
             //ParallelIterateFileDirectories.MainAction();
 
@@ -56,7 +62,9 @@ namespace TestConsole
             //DataflowBlock.SimpleJoinBlockExample();
 
             //ProducerConsumerDataflow.ProducerConsumerExample();
-            ProducerConsumerDataflow.ActionReveivesDataExample();
+            //ProducerConsumerDataflow.ActionReveivesDataExample();
+
+            //DataflowPipeline.BasicDataflowPipelineExample();
 
 
 
