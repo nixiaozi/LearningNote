@@ -1,4 +1,5 @@
 ﻿using AsyncDemo;
+using ClassToSql;
 using DataParallel;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace TestConsole
             //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
             //PerformDatabaseOperations.TestOperations();  主线程会等待异步操作完成，可能是因为知道这是异步方法
 
-            EntityFrameworkAsyncTest.TestMutiLineInsert();
+            //EntityFrameworkAsyncTest.TestMutiLineInsert();
 
 
             //同步多线程
@@ -67,7 +68,9 @@ namespace TestConsole
             //DataflowPipeline.BasicDataflowPipelineExample();
 
 
-
+            MemberSql member = new MemberSql();
+            var ge = "dsfsa";
+            SqlString<MemberSql>.SqlSelect(nameof(member.Name));
 
             Console.WriteLine("按任意键退出！");
             Console.ReadKey();

@@ -100,6 +100,10 @@
     <Content Include="XmlToSql\MemberOrder\Order.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassToSql\ClassToSql.csproj">
+      <Project>{7CBA452B-0CCC-4B5D-97D4-155B9F3DEDB3}</Project>
+      <Name>ClassToSql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataParallel\DataParallel.csproj">
       <Project>{76938884-df79-47ef-8659-ffd52b1d8eeb}</Project>
       <Name>DataParallel</Name>
