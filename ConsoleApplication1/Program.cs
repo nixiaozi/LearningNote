@@ -67,10 +67,12 @@ namespace TestConsole
 
             //DataflowPipeline.BasicDataflowPipelineExample();
 
-
             MemberSql member = new MemberSql();
             var ge = "dsfsa";
-            SqlString<MemberSql>.SqlSelect(nameof(member.Name));
+            //SqlString<MemberSql>.SqlSelect(nameof(member.Name));
+
+            var password = "123456";
+            Console.WriteLine(password+"的hash值为："+ StringExtensions.ToMd5(password));
 
             Console.WriteLine("按任意键退出！");
             Console.ReadKey();

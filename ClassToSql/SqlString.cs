@@ -59,8 +59,8 @@ namespace ClassToSql
                 AsStr = asName == null ? countName : asName,
                 SelStr = " count(" + countName + ") as " + asName,
             };
-
-            SelectPattens.Add(" count(" + countName + ") as " + asName);
+            return "";
+            //SelectPattens.Add(" count(" + countName + ") as " + asName);
         }
 
 
