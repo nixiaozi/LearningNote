@@ -17,8 +17,15 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            MemberSql member = new MemberSql();
+            var test = new SqlString<MemberSql>()
+                .SqlSelect(nameof(member.ID))
+                .SqlSelect(nameof(member.Name)).ToSqlString();
+
+            Console.WriteLine(test);
+
             //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
-            //PerformDatabaseOperations.TestOperations();  主线程会等待异步操作完成，可能是因为知道这是异步方法
+            PerformDatabaseOperations.TestOperations();  //主线程会等待异步操作完成，可能是因为知道这是异步方法
 
             //EntityFrameworkAsyncTest.TestMutiLineInsert();
 
@@ -67,9 +74,7 @@ namespace TestConsole
 
             //DataflowPipeline.BasicDataflowPipelineExample();
 
-            MemberSql member = new MemberSql();
-            var ge = "dsfsa";
-            //SqlString<MemberSql>.SqlSelect(nameof(member.Name));
+            
 
             var password = "123456";
             Console.WriteLine(password+"的hash值为："+ StringExtensions.ToMd5(password));

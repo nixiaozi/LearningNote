@@ -5,25 +5,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassToSql
+namespace    ClassToSql
 {
-    class SelectPattenItem
-    {
-        public string SelStr { get; set; }
-
-        public string AsStr { get; set; }
-
-        public override string ToString()
-        {
-            return SelStr + " as " + AsStr;
-        }
-
-    }
+                            
 
     public class SqlString<T>
     {
         private List<SelectPattenItem> SelectPattens { get; set; } = new List<SelectPattenItem>();
-        public string SqlSelect(string selName,string asName=null)
+        public SqlString<T> SqlSelect(string selName,string asName=null)
         {
             SelectPattenItem item = new SelectPattenItem
             {
@@ -35,7 +24,7 @@ namespace ClassToSql
             
 
 
-            return ToSqlString();
+            return this;
         }
 
         private void CheckToAddSel(SelectPattenItem item)
