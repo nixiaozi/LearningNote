@@ -41,6 +41,7 @@ namespace    ClassToSql
         }
 
 
+
         public string SqlCountSelect(string countName,string asName)
         {
             SelectPattenItem item = new SelectPattenItem
