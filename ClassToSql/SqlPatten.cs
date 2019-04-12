@@ -18,7 +18,7 @@ namespace ClassToSql
 
         public override string ToString()
         {
-            return SelStr + " as " + AsStr;
+            return "["+SelStr + "] as " + AsStr;
         }
 
     }
@@ -103,19 +103,33 @@ namespace ClassToSql
         private List<SelectPattenItem> _selectpattens { get; set; } = new List<SelectPattenItem>();
 
         /// <summary>
+        /// 
+        /// </summary>
+        public List<string> SelectPattens
+        {
+            get
+            {
+                return _selectpattens.Select(s => s.SelStr).ToList();
+            }
+        }
+
+        public List<OrderByPattenItem> _orderByPattens { get; set; } = new List<OrderByPattenItem>();
+
+
+        /// <summary>
         /// 聚合函数条件
         /// </summary>
-        public List<string> _groupByPattens { get; set; }
+        public List<string> _groupByPattens { get; set; } = new List<string>();
 
         /// <summary>
         /// 是否去除重复项
         /// </summary>
-        private bool _disinist { get; set; }
+        private bool _disinist { get; set; } = false;
 
         /// <summary>
         /// 筛选条件字段集合
         /// </summary>
-        public List<WherePattenItem> _wherePattens { get; set; }
+        public List<WherePattenItem> _wherePattens { get; set; } = new List<WherePattenItem>();
 
         /// <summary>
         /// 当前正在编写的筛选条件字段集合
@@ -123,6 +137,20 @@ namespace ClassToSql
         private WherePattenItem _currentWherePatten;  //可以使用linq表达式添加最好
 
        //可以使用wherestr只有无名字的函数，后面加subwherestr
+
+        public SqlPatten<T> AddTheWhere()
+        {
+
+
+            return this;
+        }
+
+        public SqlPatten<T> AddTheSubWheres()
+        {
+
+
+            return this;
+        }
 
         /// <summary>
         /// 添加普通选择字段
@@ -178,7 +206,8 @@ namespace ClassToSql
             return this;
         }
 
-        public SqlPatten<T> SqlGetRowNoSelect(string rowName,Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,string asName)
+        public SqlPatten<T> SqlGetRowNoSelect(string rowName,Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
+            string asName)
         {
             var func = orderByExp.Compile();
             var orderByPattens = func(new OrderByPattens());
