@@ -100,7 +100,7 @@ namespace ClassToSql
         /// <summary>
         /// 选择字段
         /// </summary>
-        private List<SelectPattenItem> _selectpattens { get; set; }
+        private List<SelectPattenItem> _selectpattens { get; set; } = new List<SelectPattenItem>();
 
         /// <summary>
         /// 聚合函数条件
