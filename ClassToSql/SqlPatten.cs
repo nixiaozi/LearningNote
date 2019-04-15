@@ -31,7 +31,7 @@ namespace ClassToSql
 
         public WhereValueType WhereType { get; set; }
 
-        public List<string> WhereValue { get; set; }
+        public string WhereValue { get; set; }
 
         public List<WherePattenItem> WherePattenItems { get; set; }
 
@@ -136,14 +136,107 @@ namespace ClassToSql
         /// </summary>
         private WherePattenItem _currentWherePatten;  //可以使用linq表达式添加最好
 
-       //可以使用wherestr只有无名字的函数，后面加subwherestr
+        private WhereJoinType _currentWhereJoin = WhereJoinType.And;
 
-        public SqlPatten<T> AddTheWhere()
+        //可以使用wherestr只有无名字的函数，后面加subwherestr
+
+        #region WhereMatch
+        /// <summary>
+        /// 添加where条件筛选
+        /// </summary>
+        /// <param name="whereName">筛选名字</param>
+        /// <param name="value">筛选值</param>
+        /// <param name="valueType">比较操作</param>
+        /// <param name="joinType">外联字符</param>
+        /// <returns></returns>
+        public SqlPatten<T> AddWhere(string whereName, string value, WhereValueType valueType, WhereJoinType? joinType=null)
         {
-
-
+            _currentWherePatten = new WherePattenItem
+            {
+                OutJoinType = joinType==null?_currentWhereJoin: joinType.Value,
+                WhereName = whereName,
+                WhereType = valueType,
+                WhereValue = "'" + value + "'",
+            };
+            _wherePattens.Add(_currentWherePatten);
             return this;
         }
+
+        public SqlPatten<T> WhereIn(string whereName, List<string> value)
+        {
+            return AddWhere(whereName, string.Join("','", value), WhereValueType.WithInList);
+        }
+
+        public SqlPatten<T> WhereLeftLike(string whereName, string value, WhereJoinType joinType)
+        {
+            return AddWhere(whereName, "'" + value + "%'", WhereValueType.MatchLike);
+        }
+
+        public SqlPatten<T> WhereRightLike(string whereName, string value, WhereJoinType joinType)
+        {
+            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+        }
+
+        public SqlPatten<T> WhereMidLike(string whereName, string value, WhereJoinType joinType)
+        {
+            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+        }
+
+        public SqlPatten<T> WherePreciseLike(string whereName, string value, WhereJoinType joinType)
+        {
+            return AddWhere(whereName, "'" + value + "'", WhereValueType.MatchLike);
+        }
+
+        public SqlPatten<T> WhereEqual(string whereName, string value)
+        {
+            return AddWhere(whereName,"'"+value+"'", WhereValueType.Equal);
+        }
+
+        /// <summary>
+        /// 添加并大于
+        /// </summary>
+        /// <param name="whereName">where字段</param>
+        /// <param name="value">比较的值</param>
+        /// <param name="hasEqual">是否可等于</param>
+        /// <returns></returns>
+        public SqlPatten<T> WhereBig(string whereName, string value,bool hasEqual=true)
+        {
+
+            return AddWhere(whereName, "'" + value + "'",
+                 hasEqual ? WhereValueType.BigEqualThen: WhereValueType.BigThen);
+        }
+
+        public SqlPatten<T> WhereSmall(string whereName, string value,bool hasEqual = true)
+        {
+            return AddWhere(whereName, "'" + value + "'",
+                 hasEqual ? WhereValueType.SmallEqualThen : WhereValueType.SmallThen);
+        }
+
+
+        public SqlPatten<T> WhereIn(string whereName, List<int> thes)
+        {
+            List<string> values = thes.ConvertAll<string>(delegate (int i) { return i.ToString(); });
+            return WhereIn(whereName, values);
+        }
+
+        public SqlPatten<T> WhereIn(string whereName, List<decimal> thes)
+        {
+            List<string> values = thes.ConvertAll<string>(delegate (decimal i) { return i.ToString(); });
+            return WhereIn(whereName, values);
+        }
+
+        public SqlPatten<T> WhereIn(string whereName, List<Guid> thes)
+        {
+            List<string> values = thes.ConvertAll<string>(delegate (Guid i) { return i.ToString(); });
+            return WhereIn(whereName, values);
+        }
+
+
+
+
+        #endregion
+
+
 
         public SqlPatten<T> AddTheSubWheres()
         {
