@@ -23,5 +23,9 @@ namespace ClassToSql.Enums
         WithInList = 31,
         [Display(Name = "左侧多位匹配")]
         MatchLike = 41,
+        [Display(Name = "仅为空")]
+        OnlyNull =51,
+        [Display(Name = "左侧多位匹配")]
+        NotNull =52,
     }
 }

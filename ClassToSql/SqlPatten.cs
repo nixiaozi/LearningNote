@@ -1,12 +1,8 @@
 ﻿using ClassToSql.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassToSql
 {
@@ -23,20 +19,7 @@ namespace ClassToSql
 
     }
 
-    public class WherePattenItem
-    {
-        public WhereJoinType OutJoinType { get; set; }
-
-        public string WhereName { get; set; }
-
-        public WhereValueType WhereType { get; set; }
-
-        public string WhereValue { get; set; }
-
-        public List<WherePattenItem> WherePattenItems { get; set; }
-
-        
-    }
+    
 
     /// <summary>
     /// sql排序集合
@@ -103,7 +86,7 @@ namespace ClassToSql
         private List<SelectPattenItem> _selectpattens { get; set; } = new List<SelectPattenItem>();
 
         /// <summary>
-        /// 
+        /// 所有选择的列详细
         /// </summary>
         public List<string> SelectPattens
         {
@@ -140,7 +123,7 @@ namespace ClassToSql
 
         //可以使用wherestr只有无名字的函数，后面加subwherestr
 
-        #region WhereMatch
+        #region WhereMatch筛选器
         /// <summary>
         /// 添加where条件筛选
         /// </summary>
@@ -231,17 +214,28 @@ namespace ClassToSql
             return WhereIn(whereName, values);
         }
 
+        public SqlPatten<T> WhereNotNull(string whereName)
+        {
+            return AddWhere(whereName, null, WhereValueType.NotNull);
+        }
 
+        public SqlPatten<T> WhereOnlyNull(string whereName)
+        {
+            return AddWhere(whereName, null, WhereValueType.OnlyNull);
+        }
 
 
         #endregion
 
 
 
-        public SqlPatten<T> AddTheSubWheres()
+        public SqlPatten<T> AddTheSubWheres(Expression<Func<WherePattenItem, WherePattenItem>> AddWhereExp)
         {
-
-
+            var method = AddWhereExp.Compile();
+            _currentWherePatten = new WherePattenItem();
+            _currentWherePatten.OutJoinType = _currentWhereJoin;
+            _currentWherePatten.WherePattenItems = method(new WherePattenItem()).WherePattenItems;
+            
             return this;
         }
 
