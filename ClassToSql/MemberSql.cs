@@ -18,6 +18,7 @@ namespace ClassToSql
         public DateTime CreateDate { get; set; }
 
 
+
         public static MemberSql operator +(MemberSql a, MemberSql b){
             a.Age = a.Age + b.Age;
             return a;

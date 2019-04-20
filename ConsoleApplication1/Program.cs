@@ -19,8 +19,8 @@ namespace TestConsole
         {
             MemberSql member = new MemberSql();
             var test = new SqlPatten<MemberSql>()
-                .SqlSelect(nameof(member.ID))
-                .SqlSelect(nameof(member.Name)).SqlCountSelect(nameof(member.Age),"gdsa");//.ToSqlString();
+                .AddSelect(nameof(member.ID))
+                .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa").ToSqlString();
 
             Console.WriteLine(test);
 

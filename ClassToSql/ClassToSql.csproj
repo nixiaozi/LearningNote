@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Enums\EnumExtension.cs" />
     <Compile Include="Enums\OrderByType.cs" />
+    <Compile Include="Enums\SelectType.cs" />
     <Compile Include="Enums\TableJoinType.cs" />
     <Compile Include="Enums\WhereJoinType.cs" />
     <Compile Include="Enums\WhereValueType.cs" />
     <Compile Include="JoinTable.cs" />
     <Compile Include="MemberSql.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectPattenItem.cs" />
     <Compile Include="SqlPatten.cs" />
     <Compile Include="SqlString.cs" />
     <Compile Include="TableJoinHelper.cs" />

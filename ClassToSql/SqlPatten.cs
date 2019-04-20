@@ -6,19 +6,6 @@ using System.Linq.Expressions;
 
 namespace ClassToSql
 {
-    public class SelectPattenItem
-    {
-        public string SelStr { get; set; }
-
-        public string AsStr { get; set; }
-
-        public override string ToString()
-        {
-            return "["+SelStr + "] as " + AsStr;
-        }
-
-    }
-
     
     public class SqlPatten<T>
     {
@@ -51,6 +38,11 @@ namespace ClassToSql
         /// 是否去除重复项
         /// </summary>
         private bool _disinist { get; set; } = false;
+
+        /// <summary>
+        /// 选择前几项
+        /// </summary>
+        private int _top { get; set; } = 0;
 
         /// <summary>
         /// 筛选条件字段集合
@@ -188,7 +180,7 @@ namespace ClassToSql
         /// <param name="selName"></param>
         /// <param name="asName"></param>
         /// <returns></returns>
-       public SqlPatten<T> SqlSelect(string selName,string asName=null)
+       public SqlPatten<T> AddSelect(string selName,string asName=null)
         {
             SelectPattenItem item = new SelectPattenItem
             {
@@ -206,12 +198,13 @@ namespace ClassToSql
         /// <param name="countName"></param>
         /// <param name="asName"></param>
         /// <returns></returns>
-        public SqlPatten<T> SqlCountSelect(string countName,string asName)
+        public SqlPatten<T> AddCountSelect(string countName,string asName)
         {
             SelectPattenItem item = new SelectPattenItem
             {
                 AsStr = asName == null ? countName : asName,
-                SelStr = " count(" + countName + ") as " + asName,
+                SelStr = countName,
+                TheSelectType= SelectType.Count,
             };
 
             CheckToAddSel(item);
@@ -224,19 +217,27 @@ namespace ClassToSql
         /// <param name="sumName"></param>
         /// <param name="asName"></param>
         /// <returns></returns>
-        public SqlPatten<T> SqlSumSelect(string sumName,string asName)
+        public SqlPatten<T> AddSumSelect(string sumName,string asName)
         {
             SelectPattenItem item = new SelectPattenItem
             {
                 AsStr = asName == null ? sumName : asName,
-                SelStr = " sum(" + sumName + ") as " + asName,
+                SelStr = sumName,
+                TheSelectType= SelectType.Sum,
             };
 
             CheckToAddSel(item);
             return this;
         }
 
-        public SqlPatten<T> SqlGetRowNoSelect(string rowName,Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
+        /// <summary>
+        /// 添加自定义排序选择字段
+        /// </summary>
+        /// <param name="rowName"></param>
+        /// <param name="orderByExp"></param>
+        /// <param name="asName"></param>
+        /// <returns></returns>
+        public SqlPatten<T> AddGetRowNoSelect(string rowName,Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
             string asName)
         {
             var func = orderByExp.Compile();
@@ -252,7 +253,8 @@ namespace ClassToSql
             SelectPattenItem item = new SelectPattenItem
             {
                 AsStr = asName == null ? rowName : asName,
-                SelStr = " ROW_NUMBER() over("+ orderByStr + ") as " + asName,
+                SelStr = orderByStr,
+                TheSelectType= SelectType.Row,
             };
 
             CheckToAddSel(item);
@@ -272,5 +274,57 @@ namespace ClassToSql
                 _selectpattens.Add(item);
             }
         }
+
+
+        public SqlPatten<T> AddGroupBy(string groupName)
+        {
+            _groupByPattens.Add(groupName);
+            return this;
+        }
+
+        public SqlPatten<T> AddGroupBy(List<string> groupNames)
+        {
+            _groupByPattens.AddRange(groupNames);
+            return this;
+        }
+
+
+        public string ToSqlString()
+        {
+            //首先需要对select和groupby 进行验证
+
+            //然后拼接字符串
+            var selectStr = " select ";
+            var distinct = _disinist ? " distinct " : "";
+            var topstr = _top == 0 ? "" : " top " + _top+" ";
+            selectStr += (distinct + topstr);
+            if (_selectpattens.Count == 0)
+            {
+                selectStr += " * ";
+            }
+            else
+            {
+                selectStr += string.Join(",", _selectpattens.Select(s => s.ToString()));
+            }
+
+            var fromStr = " from [" + typeof(T).Name + "] ";
+
+            var whereStr =" where 1=1 ";
+            foreach(var item in _wherePattens)
+            {
+                whereStr+=item.ToString();
+            }
+
+            var groupStr = "";
+            if (_groupByPattens.Count > 0)
+            {
+                groupStr = " group by ";
+                groupStr += string.Join(",", _groupByPattens);
+            }
+            
+
+            return selectStr + fromStr + whereStr + groupStr;
+        }
+
     }
 }
