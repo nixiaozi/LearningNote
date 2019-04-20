@@ -248,7 +248,7 @@ namespace ClassToSql
                 throw new Exception("表集合" + typeof(T).Name + "排序列" + rowName + "必须定义排序");
             }
 
-            var orderByStr = orderByPattens.ToString();
+            var orderByStr = orderByPattens.ToSqlString();
 
             SelectPattenItem item = new SelectPattenItem
             {
@@ -304,7 +304,7 @@ namespace ClassToSql
             }
             else
             {
-                selectStr += string.Join(",", _selectpattens.Select(s => s.ToString()));
+                selectStr += string.Join(",", _selectpattens.Select(s => s.ToSqlString()));
             }
 
             var fromStr = " from [" + typeof(T).Name + "] ";
@@ -312,7 +312,7 @@ namespace ClassToSql
             var whereStr =" where 1=1 ";
             foreach(var item in _wherePattens)
             {
-                whereStr+=item.ToString();
+                whereStr+=item.ToSqlString();
             }
 
             var groupStr = "";

@@ -15,7 +15,7 @@ namespace ClassToSql
 
         public SelectType TheSelectType { get; set; } = SelectType.Directly;
 
-        public override string ToString()
+        public string ToSqlString()
         {
             switch (TheSelectType)
             {

@@ -171,15 +171,17 @@ namespace ClassToSql
                     throw new Exception("未知的wherejoin类型");
             }
         }
+        #endregion
 
-        public override string ToString()
+
+        public string ToSqlString()
         {
             if (_isContain)
             {
-                if(WherePattenItems.Count > 0)
+                if (WherePattenItems.Count > 0)
                 {
                     List<string> eachwhereList = new List<string>();
-                    foreach(var item in WherePattenItems)
+                    foreach (var item in WherePattenItems)
                     {
                         eachwhereList.Add(item.ToString());
                     }
@@ -195,8 +197,5 @@ namespace ClassToSql
 
             return " ";
         }
-
-
-        #endregion
     }
 }

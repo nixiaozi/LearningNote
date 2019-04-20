@@ -30,7 +30,7 @@ namespace ClassToSql
             return this;
         }
 
-        public override string ToString()
+        public string ToSqlString()
         {
             if (_orderByPattens.Count == 0)
             {
@@ -71,22 +71,7 @@ namespace ClassToSql
     {
 
 
-        //public string ToSqlString()
-        //{
-        //    string selectHold = "";
-        //    if (SelectPattens.Count == 0)
-        //    {
-        //        selectHold = " * ";
-        //    }
-        //    else
-        //    {
-        //        selectHold=" "+string.Join(",", SelectPattens.Select(s=>s.ToString())) +" ";
-        //    }
-
-        //    var seletSql = "select " + selectHold + " from " + typeof(T).Name;
-
-
-        //    return seletSql;
-        //}
+        
     }
+
 }
