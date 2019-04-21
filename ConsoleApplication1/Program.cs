@@ -23,7 +23,9 @@ namespace TestConsole
             var test = new SqlPatten<MemberSql>()
                 .AddSelect(nameof(member.ID))
                 .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa");
-            var sql = SqlString.ToSqlString<MemberSql>(test, s => s.Add(nameof(member.Name), OrderByType.Asc));
+            var sql = SqlString.ToSqlString<MemberSql>(test, 
+                s => s.Add(nameof(member.Name), OrderByType.Asc)
+                    .Add(nameof(member.CreateDate), OrderByType.Desc),1,20);
 
             Console.WriteLine(sql);
 
