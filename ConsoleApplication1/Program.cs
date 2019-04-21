@@ -29,7 +29,12 @@ namespace TestConsole
                 .WhereBig(nameof(member.Age),"21",false)
                 .WhereLeftLike(nameof(member.Name),"gdet")
                 .ToNotOrJoin()
-                .AddTheSubWheres(s=>s.WhereBig(nameof(member.Age),"84",false).WhereNotNull(nameof(member.ID)))
+                .AddTheSubWheres(
+                    s=>s
+                        .WhereBig(nameof(member.Age),84,false)
+                        .ToOrJoin()
+                        .WhereNotNull(nameof(member.ID))
+                    )
                 .ToAndJoin()
                 .WhereIn(nameof(member.Age),new List<string> { "gdag","gdhrre"})
                 .WhereIn(nameof(member.Age), new List<int> { 52,12 });

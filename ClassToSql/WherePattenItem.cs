@@ -157,6 +157,29 @@ namespace ClassToSql
 
         #endregion
 
+        public WherePattenItem ToAndJoin()
+        {
+            this._currentJoinType = WhereJoinType.And;
+            return this;
+        }
+
+        public WherePattenItem ToNotAndJoin()
+        {
+            this._currentJoinType = WhereJoinType.AndNot;
+            return this;
+        }
+
+        public WherePattenItem ToOrJoin()
+        {
+            this._currentJoinType = WhereJoinType.Or;
+            return this;
+        }
+
+        public WherePattenItem ToNotOrJoin()
+        {
+            this._currentJoinType = WhereJoinType.OrNot;
+            return this;
+        }
 
         #region 生成where筛选字符串
         private bool _isContain { get { return string.IsNullOrEmpty(WhereName); } }
