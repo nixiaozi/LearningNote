@@ -20,10 +20,12 @@ namespace TestConsole
         static void Main(string[] args)
         {
             MemberSql member = new MemberSql();
-            var test = new SqlPatten<MemberSql>()
+            var tableMember = new SqlPatten<MemberSql>()
                 .AddSelect(nameof(member.ID))
-                .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa");
-            var sql = SqlString.ToSqlString<MemberSql>(test, 
+                .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa")
+                .AddWhere(nameof(member.Name),"gd", WhereValueType.MatchLike)
+                .WhereLeftLike(nameof(member.Name),"gdet");
+            var sql = SqlString.ToSqlString<MemberSql>(tableMember, 
                 s => s.Add(nameof(member.Name), OrderByType.Asc)
                     .Add(nameof(member.CreateDate), OrderByType.Desc),1,20);
 

@@ -91,22 +91,22 @@ namespace ClassToSql
             return AddWhere(whereName, string.Join("','", value), WhereValueType.WithInList);
         }
 
-        public SqlPatten<T> WhereLeftLike(string whereName, string value, WhereJoinType joinType)
+        public SqlPatten<T> WhereLeftLike(string whereName, string value)
         {
-            return AddWhere(whereName, "'" + value + "%'", WhereValueType.MatchLike);
+            return AddWhere(whereName, value + "%", WhereValueType.MatchLike);
         }
 
-        public SqlPatten<T> WhereRightLike(string whereName, string value, WhereJoinType joinType)
+        public SqlPatten<T> WhereRightLike(string whereName, string value)
         {
-            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, "%" + value, WhereValueType.MatchLike);
         }
 
-        public SqlPatten<T> WhereMidLike(string whereName, string value, WhereJoinType joinType)
+        public SqlPatten<T> WhereMidLike(string whereName, string value)
         {
-            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, "%" + value + "%", WhereValueType.MatchLike);
         }
 
-        public SqlPatten<T> WherePreciseLike(string whereName, string value, WhereJoinType joinType)
+        public SqlPatten<T> WherePreciseLike(string whereName, string value)
         {
             return AddWhere(whereName, "'" + value + "'", WhereValueType.MatchLike);
         }
