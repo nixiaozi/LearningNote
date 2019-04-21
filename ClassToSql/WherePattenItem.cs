@@ -47,27 +47,42 @@ namespace ClassToSql
 
         public WherePattenItem WhereLeftLike(string whereName, string value, WhereJoinType joinType)
         {
-            return AddWhere(whereName, "'" + value + "%'", WhereValueType.MatchLike);
+            return AddWhere(whereName, value + "%", WhereValueType.MatchLike);
         }
 
         public WherePattenItem WhereRightLike(string whereName, string value, WhereJoinType joinType)
         {
-            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, "%" + value, WhereValueType.MatchLike);
         }
 
         public WherePattenItem WhereMidLike(string whereName, string value, WhereJoinType joinType)
         {
-            return AddWhere(whereName, "'%" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, "%" + value + "%", WhereValueType.MatchLike);
         }
 
         public WherePattenItem WherePreciseLike(string whereName, string value, WhereJoinType joinType)
         {
-            return AddWhere(whereName, "'" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, value, WhereValueType.MatchLike);
         }
 
         public WherePattenItem WhereEqual(string whereName, string value)
         {
-            return AddWhere(whereName, "'" + value + "'", WhereValueType.Equal);
+            return AddWhere(whereName, value, WhereValueType.Equal);
+        }
+
+        public WherePattenItem WhereEqual(string whereName, int value)
+        {
+            return WhereEqual(whereName, value.ToString());
+        }
+
+        public WherePattenItem WhereEqual(string whereName, decimal value)
+        {
+            return WhereEqual(whereName, value.ToString("0.##"));
+        }
+
+        public WherePattenItem WhereEqual(string whereName, Guid value)
+        {
+            return WhereEqual(whereName, value.ToString());
         }
 
         /// <summary>
@@ -80,14 +95,34 @@ namespace ClassToSql
         public WherePattenItem WhereBig(string whereName, string value, bool hasEqual = true)
         {
 
-            return AddWhere(whereName, "'" + value + "'",
+            return AddWhere(whereName, value,
                  hasEqual ? WhereValueType.BigEqualThen : WhereValueType.BigThen);
+        }
+
+        public WherePattenItem WhereBig(string whereName, int value, bool hasEqual = true)
+        {
+            return WhereBig(whereName, value.ToString(),hasEqual);
+        }
+
+        public WherePattenItem WhereBig(string whereName, decimal value, bool hasEqual = true)
+        {
+            return WhereBig(whereName, value.ToString("0.##"), hasEqual);
         }
 
         public WherePattenItem WhereSmall(string whereName, string value, bool hasEqual = true)
         {
-            return AddWhere(whereName, "'" + value + "'",
+            return AddWhere(whereName, value,
                  hasEqual ? WhereValueType.SmallEqualThen : WhereValueType.SmallThen);
+        }
+
+        public WherePattenItem WhereSmall(string whereName, int value, bool hasEqual = true)
+        {
+            return WhereSmall(whereName, value.ToString(), hasEqual);
+        }
+
+        public WherePattenItem WhereSmall(string whereName, decimal value, bool hasEqual = true)
+        {
+            return WhereSmall(whereName, value.ToString(), hasEqual);
         }
 
 
