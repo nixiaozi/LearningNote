@@ -183,10 +183,10 @@ namespace ClassToSql
                     List<string> eachwhereList = new List<string>();
                     foreach (var item in WherePattenItems)
                     {
-                        eachwhereList.Add(item.ToString());
+                        eachwhereList.Add(item.ToSqlString());
                     }
                     var result = string.Join(" ", eachwhereList);
-                    return result.Substring(result.IndexOf("and") + 3);
+                    return string.Format(toJoinStr(), result.Substring(result.IndexOf("and") + 3));
 
                 }
             }

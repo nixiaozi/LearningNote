@@ -24,7 +24,9 @@ namespace TestConsole
                 .AddSelect(nameof(member.ID))
                 .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa")
                 .AddWhere(nameof(member.Name),"gd", WhereValueType.MatchLike)
-                .WhereLeftLike(nameof(member.Name),"gdet");
+                .WhereBig(nameof(member.Age),"21",false)
+                .WhereLeftLike(nameof(member.Name),"gdet")
+                .AddTheSubWheres(s=>s.WhereBig(nameof(member.Age),"84",false).WhereNotNull(nameof(member.ID)));
             var sql = SqlString.ToSqlString<MemberSql>(tableMember, 
                 s => s.Add(nameof(member.Name), OrderByType.Asc)
                     .Add(nameof(member.CreateDate), OrderByType.Desc),1,20);

@@ -108,12 +108,28 @@ namespace ClassToSql
 
         public SqlPatten<T> WherePreciseLike(string whereName, string value)
         {
-            return AddWhere(whereName, "'" + value + "'", WhereValueType.MatchLike);
+            return AddWhere(whereName, value, WhereValueType.MatchLike);
         }
 
         public SqlPatten<T> WhereEqual(string whereName, string value)
         {
-            return AddWhere(whereName,"'"+value+"'", WhereValueType.Equal);
+            return AddWhere(whereName,value, WhereValueType.Equal);
+        }
+
+        public SqlPatten<T> WhereEqual(string whereName, int value)
+        {
+            return WhereEqual(whereName, value.ToString());
+        }
+
+        public SqlPatten<T> WhereEqual(string whereName, Guid value)
+        {
+            return WhereEqual(whereName, value.ToString());
+        }
+
+
+        public SqlPatten<T> WhereEqual(string whereName, decimal value)
+        {
+            return WhereEqual(whereName, value.ToString("0.##"));
         }
 
         /// <summary>
@@ -126,14 +142,39 @@ namespace ClassToSql
         public SqlPatten<T> WhereBig(string whereName, string value,bool hasEqual=true)
         {
 
-            return AddWhere(whereName, "'" + value + "'",
+            return AddWhere(whereName, value,
                  hasEqual ? WhereValueType.BigEqualThen: WhereValueType.BigThen);
+        }
+
+        public SqlPatten<T> WhereBig(string whereName, int value, bool hasEqual = true)
+        {
+            return WhereBig(whereName,value.ToString(),hasEqual);
+        }
+
+        public SqlPatten<T> WhereBig(string whereName, decimal value, bool hasEqual = true)
+        {
+            return WhereBig(whereName, value.ToString("0.##"), hasEqual);
+        }
+
+        public SqlPatten<T> WhereBig(string whereName, Guid value, bool hasEqual = true)
+        {
+            return WhereBig(whereName, value.ToString(), hasEqual);
         }
 
         public SqlPatten<T> WhereSmall(string whereName, string value,bool hasEqual = true)
         {
-            return AddWhere(whereName, "'" + value + "'",
+            return AddWhere(whereName, value,
                  hasEqual ? WhereValueType.SmallEqualThen : WhereValueType.SmallThen);
+        }
+
+        public SqlPatten<T> WhereSmall(string whereName, int value, bool hasEqual = true)
+        {
+            return WhereSmall(whereName, value.ToString(),hasEqual);
+        }
+
+        public SqlPatten<T> WhereSmall(string whereName, decimal value, bool hasEqual = true)
+        {
+            return WhereSmall(whereName, value.ToString("0.##"), hasEqual);
         }
 
 
@@ -176,7 +217,7 @@ namespace ClassToSql
             _currentWherePatten = new WherePattenItem();
             _currentWherePatten.OutJoinType = _currentWhereJoin;
             _currentWherePatten.WherePattenItems = method(new WherePattenItem()).WherePattenItems;
-            
+            _wherePattens.Add(_currentWherePatten);
             return this;
         }
 
