@@ -210,6 +210,30 @@ namespace ClassToSql
         #endregion
 
 
+        public SqlPatten<T> ToAndJoin()
+        {
+            _currentWhereJoin = WhereJoinType.And;
+            return this;
+        }
+
+        public SqlPatten<T> ToOrJoin()
+        {
+            _currentWhereJoin = WhereJoinType.Or;
+            return this;
+        }
+
+        public SqlPatten<T> ToNotOrJoin()
+        {
+            _currentWhereJoin = WhereJoinType.OrNot;
+            return this;
+        }
+
+        public SqlPatten<T> ToNotAndJoin()
+        {
+            _currentWhereJoin = WhereJoinType.AndNot;
+            return this;
+        }
+
 
         public SqlPatten<T> AddTheSubWheres(Expression<Func<WherePattenItem, WherePattenItem>> AddWhereExp)
         {
