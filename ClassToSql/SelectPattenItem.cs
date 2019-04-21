@@ -9,10 +9,24 @@ namespace ClassToSql
 {
     public class SelectPattenItem
     {
+        /// <summary>
+        /// 选择的Table字段
+        /// </summary>
+        public string SelKey { get; set; }
+
+        /// <summary>
+        /// 选择的字符串
+        /// </summary>
         public string SelStr { get; set; }
 
+        /// <summary>
+        /// 选择的自定义字符串
+        /// </summary>
         public string AsStr { get; set; }
 
+        /// <summary>
+        /// 选择的类型
+        /// </summary>
         public SelectType TheSelectType { get; set; } = SelectType.Directly;
 
         public string ToSqlString()

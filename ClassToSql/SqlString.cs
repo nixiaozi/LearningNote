@@ -41,7 +41,9 @@ namespace ClassToSql
                 List<string> orderStrs = new List<string>();
                 foreach (var item in _orderByPattens)
                 {
-                    orderStrs.Add(item.OrderByName + " " + item.OrderBy.GetDisplayName());
+                    var orderBystr = item.OrderBy == OrderByType.Asc ? " asc " : 
+                        item.OrderBy == OrderByType.Desc ? " desc " : "";
+                    orderStrs.Add(item.OrderByName + " " + orderBystr);
                 }
 
                 return " order by " + string.Join(",", orderStrs);
@@ -69,9 +71,56 @@ namespace ClassToSql
 
     public static class SqlString
     {
+        public static string ToSqlString<T>(SqlPatten<T> it)
+        {
+            return it.ToSqlString();
+        }
 
+        public static string ToSqlString<T>(SqlPatten<T> it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp)
+        {
+            var method = orderByExp.Compile();
+            OrderByPattens orderByPattens =method.Invoke(new OrderByPattens());
+            return it.ToSqlString() + orderByPattens.ToSqlString();
+        }
 
-        
+        public static string ToSqlString<T>(SqlPatten<T> it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
+            int PageIndex,int PageSize)
+        {
+            var method = orderByExp.Compile();
+            OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            var orderSql= orderByPattens.ToSqlString();
+            var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
+
+            var sql = "select * ROW_NUMBER() over({0}) as _RowNum from ({1}) where (2)";
+            return string.Format(sql, orderSql, it.ToSqlString(), whereSql);
+
+        }
+
+        public static string ToSqlString(JoinedTable joinedTable)
+        {
+            var sql = "select * from ({0}) as join_table_base";
+            return string.Format(sql, joinedTable.sqlString);
+        }
+
+        public static string ToSqlString(JoinedTable it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp)
+        {
+            var method = orderByExp.Compile();
+            OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            return it.sqlString + orderByPattens.ToSqlString();
+        }
+
+        public static string ToSqlString(JoinedTable it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
+            int PageIndex, int PageSize)
+        {
+            var method = orderByExp.Compile();
+            OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            var orderSql = orderByPattens.ToSqlString();
+            var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
+
+            var sql = "select * ROW_NUMBER() over({0}) as _RowNum from ({1}) where (2)";
+            return string.Format(sql, orderSql, it.sqlString, whereSql);
+        }
+
     }
 
 }

@@ -17,13 +17,20 @@ namespace ClassToSql
 
         public SqlPatten<F> TheTable { get; set; }
 
-        public JoinedTable Join<C>(JoinTable<C> SecondTable)
+        public JoinedTable Join<C>(JoinTable<C> SecondTable,TableJoinType joinType)
         {
-            var joinedTable = new JoinedTable(2);
-            var list = TheTable.SelectPattens;
-            list.AddRange(SecondTable.TheTable.SelectPattens);
+            var joinedTable = new JoinedTable();
+            var list = TheTable.SelectAliaPattens;
+            list.AddRange(SecondTable.TheTable.SelectAliaPattens);
             joinedTable.SelectList = list;
-            joinedTable.sqlString = "";
+
+            string MatchName = "";
+            TableJoinHelper.CheckTableJoinVaild<F,C>(TheTable.SelectAliaPattens, 
+                SecondTable.TheTable.SelectAliaPattens,out MatchName);
+
+            joinedTable.sqlString = TableJoinHelper.TableJoinSqlString(TheTable.ToSqlString(),
+                SecondTable.TheTable.ToSqlString(),TableJoin,MatchName);
+
             return joinedTable;
         }
 
@@ -32,19 +39,25 @@ namespace ClassToSql
     public class JoinedTable
     {
         public JoinedTable() { }
-        public JoinedTable(int num)
-        {
-            _joinedNum = num;
-        }
-        private int _joinedNum { get; set; } = 0;
+
         public List<string> SelectList { get; set; }
 
         public string sqlString { get; set; }
 
-        public JoinedTable Join<C>(JoinTable<C> SecondTable)
+        public JoinedTable Join<C>(JoinTable<C> SecondTable,TableJoinType joinType)
         {
-            _joinedNum++;
+            string MatchName = "";
+            TableJoinHelper.CheckTableJoinVaild<JoinedTable, C>(this.SelectList,
+                SecondTable.TheTable.SelectAliaPattens, out MatchName);
 
+            var list = SelectList;
+            list.AddRange(SecondTable.TheTable.SelectAliaPattens);
+            this.SelectList = list;
+
+            var baseSqlString = string.Format("select * from ({0})", sqlString);
+
+            this.sqlString = TableJoinHelper.TableJoinSqlString(baseSqlString,
+                SecondTable.TheTable.ToSqlString(), joinType, MatchName);
 
             return this;
         }

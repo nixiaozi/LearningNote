@@ -17,16 +17,22 @@ namespace ClassToSql
         /// <summary>
         /// 所有选择的列详细
         /// </summary>
-        public List<string> SelectPattens
+        public List<string> SelectKeyPattens
         {
             get
             {
-                return _selectpattens.Select(s => s.SelStr).ToList();
+                return _selectpattens.Select(s => s.SelKey).Where(s=>s!=null).ToList();
             }
         }
 
-        //不需要排序
-        //public List<OrderByPattenItem> _orderByPattens { get; set; } = new List<OrderByPattenItem>();
+
+        public List<string> SelectAliaPattens
+        {
+            get
+            {
+                return _selectpattens.Select(s => s.AsStr).ToList();
+            }
+        }
 
 
         /// <summary>
@@ -184,6 +190,8 @@ namespace ClassToSql
         {
             SelectPattenItem item = new SelectPattenItem
             {
+                SelKey=selName,
+                TheSelectType= SelectType.Directly,
                 AsStr = asName == null ? selName : asName,
                 SelStr = selName,
             };
@@ -205,6 +213,7 @@ namespace ClassToSql
                 AsStr = asName == null ? countName : asName,
                 SelStr = countName,
                 TheSelectType= SelectType.Count,
+                SelKey=countName,
             };
 
             CheckToAddSel(item);
@@ -224,6 +233,7 @@ namespace ClassToSql
                 AsStr = asName == null ? sumName : asName,
                 SelStr = sumName,
                 TheSelectType= SelectType.Sum,
+                SelKey=sumName,
             };
 
             CheckToAddSel(item);
@@ -255,6 +265,7 @@ namespace ClassToSql
                 AsStr = asName == null ? rowName : asName,
                 SelStr = orderByStr,
                 TheSelectType= SelectType.Row,
+                SelKey= null,
             };
 
             CheckToAddSel(item);

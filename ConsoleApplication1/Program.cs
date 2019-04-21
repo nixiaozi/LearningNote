@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskBasedAsyncProgramming;
 using TaskParallelLibraryDataflow;
+using ClassToSql;
+using ClassToSql.Enums;
 
 namespace TestConsole
 {
@@ -20,9 +22,10 @@ namespace TestConsole
             MemberSql member = new MemberSql();
             var test = new SqlPatten<MemberSql>()
                 .AddSelect(nameof(member.ID))
-                .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa").ToSqlString();
+                .AddSelect(nameof(member.Name)).AddCountSelect(nameof(member.Age), "gdsa");
+            var sql = SqlString.ToSqlString<MemberSql>(test, s => s.Add(nameof(member.Name), OrderByType.Asc));
 
-            Console.WriteLine(test);
+            Console.WriteLine(sql);
 
             //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
             //PerformDatabaseOperations.TestOperations();  //主线程会等待异步操作完成，可能是因为知道这是异步方法,测试时
