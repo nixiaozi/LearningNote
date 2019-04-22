@@ -21,12 +21,14 @@ namespace ClassToSql
         {
             var joinedTable = new JoinedTable();
             var list = TheTable.SelectAliaPattens;
-            list.AddRange(SecondTable.TheTable.SelectAliaPattens);
-            joinedTable.SelectList = list.Distinct().ToList();
 
             string MatchName = "";
             TableJoinHelper.CheckTableJoinVaild<F,C>(TheTable.SelectAliaPattens, 
                 SecondTable.TheTable.SelectAliaPattens,out MatchName);
+
+            list.AddRange(SecondTable.TheTable.SelectAliaPattens);
+            list.Add("join_table_base." + MatchName + " as " + MatchName);
+            joinedTable.SelectList = list.Where(s => s != MatchName).ToList();
 
             joinedTable.sqlString = TableJoinHelper.TableJoinSqlString(TheTable.ToSqlString(),
                 SecondTable.TheTable.ToSqlString(),TableJoin,MatchName);
@@ -52,7 +54,8 @@ namespace ClassToSql
 
             var list = SelectList;
             list.AddRange(SecondTable.TheTable.SelectAliaPattens);
-            this.SelectList = list.Distinct().ToList();
+            list.Add("join_table_base." + MatchName+" as "+ MatchName);
+            this.SelectList = list.Where(s => s != MatchName).ToList();
 
             var baseSqlString = string.Format("select * from ({0})", sqlString);
 
