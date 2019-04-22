@@ -38,9 +38,20 @@ namespace TestConsole
                 .ToAndJoin()
                 .WhereIn(nameof(member.Age),new List<string> { "gdag","gdhrre"})
                 .WhereIn(nameof(member.Age), new List<int> { 52,12 });
-            var sql = SqlString.ToSqlString<MemberSql>(tableMember,
-                s => s.Add(nameof(member.Name), OrderByType.Asc)
-                    .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
+
+            WorkSql work = new WorkSql();
+            var tableWork = new SqlPatten<WorkSql>()
+                .AddSelect(nameof(work.ID), "WorkID")
+                .AddSelect(nameof(work.MemberId), "ID")
+                .WhereSmall(nameof(work.WorkTimes), 7);
+            var joinTable = new JoinTable<WorkSql>(tableWork)
+                .Join<MemberSql>(new JoinTable<MemberSql>(tableMember), TableJoinType.InnerJoin);
+
+            var sql = SqlString.ToSqlString(joinTable, s => s.Add(nameof(member.Name), OrderByType.Asc)
+                      .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
+            //var sql = SqlString.ToSqlString<MemberSql>(tableMember,
+            //    s => s.Add(nameof(member.Name), OrderByType.Asc)
+            //        .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
 
             Console.WriteLine(sql);
 

@@ -22,7 +22,7 @@ namespace ClassToSql
             var joinedTable = new JoinedTable();
             var list = TheTable.SelectAliaPattens;
             list.AddRange(SecondTable.TheTable.SelectAliaPattens);
-            joinedTable.SelectList = list;
+            joinedTable.SelectList = list.Distinct().ToList();
 
             string MatchName = "";
             TableJoinHelper.CheckTableJoinVaild<F,C>(TheTable.SelectAliaPattens, 
@@ -52,7 +52,7 @@ namespace ClassToSql
 
             var list = SelectList;
             list.AddRange(SecondTable.TheTable.SelectAliaPattens);
-            this.SelectList = list;
+            this.SelectList = list.Distinct().ToList();
 
             var baseSqlString = string.Format("select * from ({0})", sqlString);
 

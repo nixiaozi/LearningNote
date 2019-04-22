@@ -18,18 +18,20 @@ namespace ClassToSql
         public DateTime CreateDate { get; set; }
 
 
+    }
 
-        public static MemberSql operator +(MemberSql a, MemberSql b){
-            a.Age = a.Age + b.Age;
-            return a;
-        }
+    public class WorkSql
+    {
+        public Guid ID { get; set; }
+
+        public Guid MemberId { get; set; }
+
+        public string WorkName { get; set; }
+
+        public string WorkLocation { get; set; }
+
+        public int WorkTimes { get; set; }
 
 
-        public string SqlSelect(Expression<MemberSql> express)
-        {
-
-
-            return "";
-        }
     }
 }
