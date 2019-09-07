@@ -1,16 +1,8 @@
-﻿using AsyncDemo;
-using ClassToSql;
-using DataParallel;
+﻿using ClassToSql;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using TaskBasedAsyncProgramming;
-using TaskParallelLibraryDataflow;
-using ClassToSql;
 using ClassToSql.Enums;
 
 namespace TestConsole
