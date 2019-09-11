@@ -10,10 +10,21 @@ namespace ClassToSql
     public class SqlPatten<T>
     {
         /// <summary>
+        /// 是否使用聚合函数(默认不使用)
+        /// </summary>
+        /// <param name="groupUserd"></param>
+        public SqlPatten(bool groupUserd =false)
+        {
+            _groupUsed = groupUserd;
+        }
+
+
+        /// <summary>
         /// 选择字段
         /// </summary>
         private List<SelectPattenItem> _selectpattens { get; set; } = new List<SelectPattenItem>();
 
+        
         /// <summary>
         /// 所有选择的列详细
         /// </summary>
@@ -34,6 +45,10 @@ namespace ClassToSql
             }
         }
 
+        /// <summary>
+        /// 验证是否已使用了聚合函数
+        /// </summary>
+        private bool _groupUsed { get; set; } = false;
 
         /// <summary>
         /// 聚合函数条件
@@ -65,6 +80,7 @@ namespace ClassToSql
         //可以使用wherestr只有无名字的函数，后面加subwherestr
 
         #region WhereMatch筛选器
+
         /// <summary>
         /// 添加where条件筛选
         /// </summary>
@@ -85,7 +101,7 @@ namespace ClassToSql
             _wherePattens.Add(_currentWherePatten);
             return this;
         }
-
+        
         public SqlPatten<T> WhereIn(string whereName, List<string> value)
         {
             return AddWhere(whereName, string.Join("','", value), WhereValueType.WithInList);
@@ -209,6 +225,7 @@ namespace ClassToSql
 
         #endregion
 
+        #region WhereJoin 条件聚合方法
 
         public SqlPatten<T> ToAndJoin()
         {
@@ -245,13 +262,17 @@ namespace ClassToSql
             return this;
         }
 
+        #endregion
+
+
+
         /// <summary>
         /// 添加普通选择字段
         /// </summary>
         /// <param name="selName"></param>
         /// <param name="asName"></param>
         /// <returns></returns>
-       public SqlPatten<T> AddSelect(string selName,string asName=null)
+        public SqlPatten<T> AddSelect(string selName,string asName=null)
         {
             SelectPattenItem item = new SelectPattenItem
             {
@@ -368,6 +389,7 @@ namespace ClassToSql
         public string ToSqlString()
         {
             //首先需要对select和groupby 进行验证
+            //需要在添加sel时验证
 
             //然后拼接字符串
             var selectStr = " select ";
