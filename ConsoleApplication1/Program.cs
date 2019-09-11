@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using ClassToSql.Enums;
+using EntityFrameworkTest.Model;
+using EntityFrameworkTest.Context;
+using EntityFrameworkTest;
 
 namespace TestConsole
 {
@@ -11,8 +14,10 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            MemberSql member = new MemberSql();
-            var tableMember = new SqlPatten<MemberSql>()
+            // EntityFrameworkTestHelper.InitLoadData();
+
+            Member member = new Member();
+            var tableMember = new SqlPatten<Member>()
                 .AddSelect(nameof(member.ID))
                 .AddSelect(nameof(member.Name))
                 .AddCountSelect(nameof(member.Age), "gdsa")
@@ -31,13 +36,13 @@ namespace TestConsole
                 .WhereIn(nameof(member.Age),new List<string> { "gdag","gdhrre"})
                 .WhereIn(nameof(member.Age), new List<int> { 52,12 });
 
-            WorkSql work = new WorkSql();
-            var tableWork = new SqlPatten<WorkSql>()
+            Work work = new Work();
+            var tableWork = new SqlPatten<Work>()
                 .AddSelect(nameof(work.ID), "WorkID")
                 .AddSelect(nameof(work.MemberId), "ID")
                 .WhereSmall(nameof(work.WorkTimes), 7);
-            var joinTable = new JoinTable<WorkSql>(tableWork)
-                .Join<MemberSql>(new JoinTable<MemberSql>(tableMember), TableJoinType.InnerJoin);
+            var joinTable = new JoinTable<Work>(tableWork)
+                .Join<Member>(new JoinTable<Member>(tableMember), TableJoinType.LeftJoin);
 
             var sql = SqlString.ToSqlString(joinTable, s => s.Add(nameof(member.Name), OrderByType.Asc)
                       .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);

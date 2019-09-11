@@ -108,6 +108,10 @@
       <Project>{76938884-df79-47ef-8659-ffd52b1d8eeb}</Project>
       <Name>DataParallel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EntityFrameworkTest\EntityFrameworkTest.csproj">
+      <Project>{4CC17780-A87E-4C61-A0FC-856AF2093073}</Project>
+      <Name>EntityFrameworkTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskBasedAsyncProgramming\TaskBasedAsyncProgramming.csproj">
       <Project>{d09f5ba2-242b-4c1e-807d-f3a618fd3f8a}</Project>
       <Name>TaskBasedAsyncProgramming</Name>
