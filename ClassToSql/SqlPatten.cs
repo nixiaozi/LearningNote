@@ -12,10 +12,10 @@ namespace ClassToSql
         /// <summary>
         /// 是否使用聚合函数(默认不使用)
         /// </summary>
-        /// <param name="groupUserd"></param>
+        /// <param name="groupUserd">是否使用聚合函数</param>
         /// <param name="disinist">是否去除重复项</param>
         /// <param name="top">前多少行选择器</param>
-        public SqlPatten(bool groupUserd =false,bool disinist=false,int? top=null)
+        public SqlPatten(bool groupUserd,bool disinist=false,int? top=null)
         {
             _groupUsed = groupUserd;
             _top = top;
@@ -372,7 +372,16 @@ namespace ClassToSql
             }
             else
             {
+                if(!_groupUsed &&(item.TheSelectType== SelectType.Count || item.TheSelectType == SelectType.Sum))
+                {
+                    throw new Exception("你已定义了" + typeof(T).Name + "查询不能使用聚合函数");
+                }
+
                 _selectpattens.Add(item);
+                
+                if(_groupUsed)
+                    _groupByPattens.Add(item.SelKey); // 如果使用了聚合函数，那么所有非聚合的字段的select需要在gourp by 中
+
             }
         }
 

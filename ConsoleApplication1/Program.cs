@@ -16,8 +16,13 @@ namespace TestConsole
         {
             // EntityFrameworkTestHelper.InitLoadData();
 
+            Console.WriteLine(DateTime.Today.AddDays(1).ToString("yyyy-MM-dd HH:mm:ss"));
+            Console.WriteLine(DateTime.Now);
+            Console.WriteLine((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes);
+            Console.WriteLine(Math.Ceiling((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+
             Member member = new Member();
-            var tableMember = new SqlPatten<Member>()
+            var tableMember = new SqlPatten<Member>(true)
                 .AddSelect(nameof(member.ID))
                 .AddSelect(nameof(member.Name))
                 .AddCountSelect(nameof(member.Age), "gdsa")
@@ -37,7 +42,7 @@ namespace TestConsole
                 .WhereIn(nameof(member.Age), new List<int> { 52,12 });
 
             Work work = new Work();
-            var tableWork = new SqlPatten<Work>()
+            var tableWork = new SqlPatten<Work>(true)
                 .AddSelect(nameof(work.ID), "WorkID")
                 .AddSelect(nameof(work.MemberId), "ID")
                 .WhereSmall(nameof(work.WorkTimes), 7);
