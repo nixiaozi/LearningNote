@@ -71,11 +71,24 @@ namespace ClassToSql
 
     public static class SqlString
     {
+        /// <summary>
+        /// 单表查询生成SQL
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="it"></param>
+        /// <returns></returns>
         public static string ToSqlString<T>(SqlPatten<T> it)
         {
             return it.ToSqlString();
         }
 
+        /// <summary>
+        /// 单表查询增加排序号字段
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="it"></param>
+        /// <param name="orderByExp"></param>
+        /// <returns></returns>
         public static string ToSqlString<T>(SqlPatten<T> it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp)
         {
             var method = orderByExp.Compile();
@@ -83,6 +96,15 @@ namespace ClassToSql
             return it.ToSqlString() + orderByPattens.ToSqlString();
         }
 
+        /// <summary>
+        /// 单表查询增加自定义分页查询
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="it"></param>
+        /// <param name="orderByExp"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <returns></returns>
         public static string ToSqlString<T>(SqlPatten<T> it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
             int PageIndex,int PageSize)
         {
@@ -97,12 +119,23 @@ namespace ClassToSql
 
         }
 
+        /// <summary>
+        /// 联表查询生成sql
+        /// </summary>
+        /// <param name="joinedTable"></param>
+        /// <returns></returns>
         public static string ToSqlString(JoinedTable joinedTable)
         {
             var sql = "select * from ({0}) as join_table_base";
             return string.Format(sql, joinedTable.sqlString);
         }
 
+        /// <summary>
+        /// 联表查询并使用自定义排序生成sql
+        /// </summary>
+        /// <param name="it"></param>
+        /// <param name="orderByExp"></param>
+        /// <returns></returns>
         public static string ToSqlString(JoinedTable it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp)
         {
             var method = orderByExp.Compile();
@@ -110,6 +143,14 @@ namespace ClassToSql
             return it.sqlString + orderByPattens.ToSqlString();
         }
 
+        /// <summary>
+        /// 联表查询使用自定义排序的分页查询
+        /// </summary>
+        /// <param name="it"></param>
+        /// <param name="orderByExp"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <returns></returns>
         public static string ToSqlString(JoinedTable it, Expression<Func<OrderByPattens, OrderByPattens>> orderByExp,
             int PageIndex, int PageSize)
         {
