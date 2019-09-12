@@ -13,9 +13,13 @@ namespace ClassToSql
         /// 是否使用聚合函数(默认不使用)
         /// </summary>
         /// <param name="groupUserd"></param>
-        public SqlPatten(bool groupUserd =false)
+        /// <param name="disinist">是否去除重复项</param>
+        /// <param name="top">前多少行选择器</param>
+        public SqlPatten(bool groupUserd =false,bool disinist=false,int? top=null)
         {
             _groupUsed = groupUserd;
+            _top = top;
+            _disinist = disinist;
         }
 
 
@@ -63,7 +67,7 @@ namespace ClassToSql
         /// <summary>
         /// 选择前几项
         /// </summary>
-        private int _top { get; set; } = 0;
+        private int? _top { get; set; } =null;
 
         /// <summary>
         /// 筛选条件字段集合
@@ -394,7 +398,7 @@ namespace ClassToSql
             //然后拼接字符串
             var selectStr = " select ";
             var distinct = _disinist ? " distinct " : "";
-            var topstr = _top == 0 ? "" : " top " + _top+" ";
+            var topstr = _top == null ? "" : " top " + _top+" ";
             selectStr += (distinct + topstr);
             if (_selectpattens.Count == 0)
             {
