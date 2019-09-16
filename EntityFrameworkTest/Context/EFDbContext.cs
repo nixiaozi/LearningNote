@@ -13,6 +13,9 @@ namespace EntityFrameworkTest.Context
         public DbSet<Member> Members { get; set; }
         public DbSet<Work> Works { get; set; }
 
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+        }
     }
 }

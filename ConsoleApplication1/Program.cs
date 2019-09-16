@@ -14,12 +14,34 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            // EntityFrameworkTestHelper.InitLoadData();
+            EntityFrameworkTestHelper.InitLoadData();
 
-            Console.WriteLine(DateTime.Today.AddDays(1).ToString("yyyy-MM-dd HH:mm:ss"));
-            Console.WriteLine(DateTime.Now);
-            Console.WriteLine((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes);
-            Console.WriteLine(Math.Ceiling((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+            Console.WriteLine("单表查询生成SQL");
+            Member singleTable = new Member();
+            var tableMembe = new SqlPatten<Member>(true)
+                .AddSelect(nameof(singleTable.ID))
+                .AddSelect(nameof(singleTable.Name))
+                .AddCountSelect(nameof(singleTable.Age), "gdsa")
+                .AddWhere(nameof(singleTable.Name), "gd", WhereValueType.MatchLike)
+                .WhereSmall(nameof(singleTable.Age), "21", true)
+                .WhereBig(nameof(singleTable.Age), "21", false)
+                .WhereLeftLike(nameof(singleTable.Name), "gdet")
+                .ToNotOrJoin()
+                .AddTheSubWheres(
+                    s => s
+                        .WhereBig(nameof(singleTable.Age), 84, false)
+                        .ToOrJoin()
+                        .WhereNotNull(nameof(singleTable.ID))
+                    )
+                .ToAndJoin()
+                .WhereIn(nameof(singleTable.Age), new List<string> { "gdag", "gdhrre" })
+                .WhereIn(nameof(singleTable.Age), new List<int> { 52, 12 });
+
+            var singleTableSql = SqlString.ToSqlString<Member>(tableMembe);
+            Console.WriteLine(singleTableSql);
+
+
+            Console.WriteLine("以下测试！");
 
             Member member = new Member();
             var tableMember = new SqlPatten<Member>(true)
