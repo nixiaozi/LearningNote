@@ -114,7 +114,7 @@ namespace ClassToSql
             var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
 
             var selectSql = string.Join(",", it.SelectAliaPattens);
-            var sql = "select "+ selectSql + ", ROW_NUMBER() over({0}) as _RowNum from ({1}) as table_join_base where {2}";
+            var sql = "select * from ( select "+ selectSql + ", ROW_NUMBER() over({0}) as _RowNum from ({1}) as table_join_base ) as table_join_new where {2}";
             return string.Format(sql, orderSql, it.ToSqlString(), whereSql);
 
         }
@@ -140,6 +140,7 @@ namespace ClassToSql
         {
             var method = orderByExp.Compile();
             OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+
             return it.sqlString + orderByPattens.ToSqlString();
         }
 
@@ -160,7 +161,7 @@ namespace ClassToSql
             var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
 
             var selectSql = string.Join(",", it.SelectList);
-            var sql = "select "+ selectSql + ", ROW_NUMBER() over({0}) as _RowNum from ({1}) as table_join_base where {2}";
+            var sql = "select * from ( select "+ selectSql + ", ROW_NUMBER() over({0}) as _RowNum from ({1}) as table_join_base ) as table_join_new where {2}";
             return string.Format(sql, orderSql, it.sqlString, whereSql);
         }
 

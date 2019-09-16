@@ -379,7 +379,7 @@ namespace ClassToSql
 
                 _selectpattens.Add(item);
                 
-                if(_groupUsed)
+                if(_groupUsed && item.TheSelectType== SelectType.Directly)
                     _groupByPattens.Add(item.SelKey); // 如果使用了聚合函数，那么所有非聚合的字段的select需要在gourp by 中
 
             }

@@ -7,6 +7,7 @@ using ClassToSql.Enums;
 using EntityFrameworkTest.Model;
 using EntityFrameworkTest.Context;
 using EntityFrameworkTest;
+using System.Diagnostics;
 
 namespace TestConsole
 {
@@ -14,35 +15,66 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            EntityFrameworkTestHelper.InitLoadData();
+            Stopwatch stopWatch = new Stopwatch(); //用户获取执行耗时
 
+            // EntityFrameworkTestHelper.InitLoadData();
+
+            Member testMember = new Member();
             Console.WriteLine("单表查询生成SQL");
-            Member singleTable = new Member();
-            var tableMembe = new SqlPatten<Member>(true)
-                .AddSelect(nameof(singleTable.ID))
-                .AddSelect(nameof(singleTable.Name))
-                .AddCountSelect(nameof(singleTable.Age), "gdsa")
-                .AddWhere(nameof(singleTable.Name), "gd", WhereValueType.MatchLike)
-                .WhereSmall(nameof(singleTable.Age), "21", true)
-                .WhereBig(nameof(singleTable.Age), "21", false)
-                .WhereLeftLike(nameof(singleTable.Name), "gdet")
+            stopWatch.Start();
+            var singleTable = new SqlPatten<Member>(true)
+                .AddSelect(nameof(testMember.ID))
+                .AddSelect(nameof(testMember.Name))
+                .AddCountSelect(nameof(testMember.Age), "gdsa")
+                .AddWhere(nameof(testMember.Name), "gd", WhereValueType.MatchLike)
+                .WhereSmall(nameof(testMember.Age), "21", true)
+                .WhereBig(nameof(testMember.Age), "21", false)
+                .WhereLeftLike(nameof(testMember.Name), "gdet")
                 .ToNotOrJoin()
                 .AddTheSubWheres(
                     s => s
-                        .WhereBig(nameof(singleTable.Age), 84, false)
+                        .WhereBig(nameof(testMember.Age), 84, false)
                         .ToOrJoin()
-                        .WhereNotNull(nameof(singleTable.ID))
+                        .WhereNotNull(nameof(testMember.ID))
                     )
                 .ToAndJoin()
-                .WhereIn(nameof(singleTable.Age), new List<string> { "gdag", "gdhrre" })
-                .WhereIn(nameof(singleTable.Age), new List<int> { 52, 12 });
+                .WhereIn(nameof(testMember.Age), new List<string> { "gdag", "gdhrre" })
+                .WhereIn(nameof(testMember.Age), new List<int> { 52, 12 });
 
-            var singleTableSql = SqlString.ToSqlString<Member>(tableMembe);
+            var singleTableSql = SqlString.ToSqlString<Member>(singleTable);
+            stopWatch.Stop();
+            Console.WriteLine("耗时：" + stopWatch.Elapsed);
             Console.WriteLine(singleTableSql);
 
 
-            Console.WriteLine("以下测试！");
 
+            Console.WriteLine("单表查询增加排序号字段");
+            stopWatch.Restart();
+            var singleTableWithOrder = new SqlPatten<Member>(true)
+                .WhereBig(nameof(testMember.Age),20);
+
+            var singleTableWithOrderSql = SqlString.ToSqlString<Member>(singleTableWithOrder, s => s.Add(nameof(testMember.CreateDate), OrderByType.Desc));
+            stopWatch.Stop();
+            Console.WriteLine("耗时：" + stopWatch.Elapsed);
+            Console.WriteLine(singleTableWithOrderSql);
+
+
+
+            Console.WriteLine("单表查询增加自定义分页查询");
+            stopWatch.Restart();
+            var singleTableWithOrderPaging = new SqlPatten<Member>(true)
+                .AddSumSelect(nameof(testMember.Age), "TheAges")
+                .AddSelect(nameof(testMember.Name));
+
+            var singleTableWithOrderPagingSql = SqlString.ToSqlString<Member>(singleTableWithOrderPaging, s => s.Add(nameof(testMember.CreateDate), OrderByType.Desc),
+                1, 5);
+            stopWatch.Stop();
+            Console.WriteLine("耗时：" + stopWatch.Elapsed);
+            Console.WriteLine(singleTableWithOrderPagingSql);
+
+
+            Console.WriteLine("以下测试！");
+            stopWatch.Restart();
             Member member = new Member();
             var tableMember = new SqlPatten<Member>(true)
                 .AddSelect(nameof(member.ID))
@@ -77,6 +109,8 @@ namespace TestConsole
             //    s => s.Add(nameof(member.Name), OrderByType.Asc)
             //        .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
 
+            stopWatch.Stop();
+            Console.WriteLine("耗时：" + stopWatch.Elapsed);
             Console.WriteLine(sql);
 
             //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
