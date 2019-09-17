@@ -93,6 +93,7 @@ namespace ClassToSql
         {
             var method = orderByExp.Compile();
             OrderByPattens orderByPattens =method.Invoke(new OrderByPattens());
+            CheckOrderby(orderByPattens, it.SelectAliaPattens, "单表查询增加自定义排序查询排序字段无效");
             return it.ToSqlString() + orderByPattens.ToSqlString();
         }
 
@@ -110,6 +111,8 @@ namespace ClassToSql
         {
             var method = orderByExp.Compile();
             OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            CheckOrderby(orderByPattens, it.SelectAliaPattens, "单表查询增加自定义分页查询排序字段无效");
+
             var orderSql= orderByPattens.ToSqlString();
             var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
 
@@ -140,6 +143,7 @@ namespace ClassToSql
         {
             var method = orderByExp.Compile();
             OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            CheckOrderby(orderByPattens, it.SelectList, "联表查询使用自定义排序的查询排序字段无效");
 
             return it.sqlString + orderByPattens.ToSqlString();
         }
@@ -157,12 +161,30 @@ namespace ClassToSql
         {
             var method = orderByExp.Compile();
             OrderByPattens orderByPattens = method.Invoke(new OrderByPattens());
+            CheckOrderby(orderByPattens, it.SelectList, "联表查询使用自定义排序的分页查询排序字段无效");
+
             var orderSql = orderByPattens.ToSqlString();
             var whereSql = string.Format(" _RowNum>{0} and _RowNum<={1} ", (PageIndex - 1) * PageSize, PageIndex * PageSize);
 
             var selectSql = string.Join(",", it.SelectList);
             var sql = "select * from ( select "+ selectSql + ", ROW_NUMBER() over({0}) as _RowNum from ({1}) as table_join_base ) as table_join_new where {2}";
             return string.Format(sql, orderSql, it.sqlString, whereSql);
+        }
+
+        /// <summary>
+        /// 验证最终排序中是否存在无效字段
+        /// </summary>
+        private static void CheckOrderby(OrderByPattens orderByPattens,List<string> SelList,string ErrorMessage)
+        {
+            var OrderList = orderByPattens._orderByPattens.Select(s => s.OrderByName);
+            foreach(var item in OrderList)
+            {
+                if (!SelList.Contains(item))
+                {
+                    throw new Exception(ErrorMessage,new Exception("出现了无效的排序字段："+ item));
+                }
+            }
+
         }
 
     }
