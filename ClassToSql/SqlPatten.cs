@@ -45,6 +45,11 @@ namespace ClassToSql
         {
             get
             {
+                if (_selectpattens.Count<=0)
+                {
+                    ToSelectAll();
+                }
+
                 return _selectpattens.Select(s => s.AsStr).ToList();
             }
         }
@@ -398,6 +403,29 @@ namespace ClassToSql
             return this;
         }
 
+        /// <summary>
+        /// 列出所有字段
+        /// </summary>
+        /// <returns></returns>
+        private void ToSelectAll()
+        {
+            List<SelectPattenItem> result = new List<SelectPattenItem>();
+            Type type = typeof(T);
+
+            var properties= type.GetProperties();
+            foreach(var item in properties)
+            {
+                result.Add(new SelectPattenItem
+                {
+                    TheSelectType = SelectType.Directly,
+                    SelKey = item.Name,
+                    AsStr=item.Name,
+                    SelStr=item.Name,
+                });
+            }
+
+            _selectpattens = result;
+        }
 
         public string ToSqlString()
         {
@@ -409,6 +437,13 @@ namespace ClassToSql
             var distinct = _disinist ? " distinct " : "";
             var topstr = _top == null ? "" : " top " + _top+" ";
             selectStr += (distinct + topstr);
+
+            if (_selectpattens.Count == 0)
+            {
+                ToSelectAll();
+            }
+
+
             if (_selectpattens.Count == 0)
             {
                 selectStr += " * ";

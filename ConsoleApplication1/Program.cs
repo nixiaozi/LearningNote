@@ -19,7 +19,23 @@ namespace TestConsole
 
             // EntityFrameworkTestHelper.InitLoadData();
 
+
             Member testMember = new Member();
+
+            //Guid Test
+            Console.WriteLine("Guid Test!");
+            stopWatch.Restart();
+            var guidTest = new SqlPatten<Member>(true)
+                .AddSumSelect(nameof(testMember.Age), "TheAges")
+                .AddSelect(nameof(testMember.Name))
+                .WhereEqual(nameof(testMember.ID), new Guid("E15DE442-F6E7-4094-BFC3-012B5EE211B2"));
+
+            var guidTestSql = SqlString.ToSqlString<Member>(guidTest);
+            stopWatch.Stop();
+            Console.WriteLine("耗时：" + stopWatch.Elapsed);
+            Console.WriteLine(guidTestSql);
+
+
             Console.WriteLine("单表查询生成SQL");
             stopWatch.Start();
             var singleTable = new SqlPatten<Member>(true)
@@ -66,52 +82,16 @@ namespace TestConsole
                 .AddSumSelect(nameof(testMember.Age), "TheAges")
                 .AddSelect(nameof(testMember.Name));
 
-            var singleTableWithOrderPagingSql = SqlString.ToSqlString<Member>(singleTableWithOrderPaging, s => s.Add(nameof(testMember.CreateDate), OrderByType.Desc),
+            var singleTableWithOrderPagingSql = SqlString.ToSqlString<Member>(singleTableWithOrderPaging, s => s.Add("TheAges", OrderByType.Desc),
                 1, 5);
             stopWatch.Stop();
             Console.WriteLine("耗时：" + stopWatch.Elapsed);
             Console.WriteLine(singleTableWithOrderPagingSql);
 
 
-            Console.WriteLine("以下测试！");
-            stopWatch.Restart();
-            Member member = new Member();
-            var tableMember = new SqlPatten<Member>(true)
-                .AddSelect(nameof(member.ID))
-                .AddSelect(nameof(member.Name))
-                .AddCountSelect(nameof(member.Age), "gdsa")
-                .AddWhere(nameof(member.Name),"gd", WhereValueType.MatchLike)
-                .WhereSmall(nameof(member.Age), "21", true)
-                .WhereBig(nameof(member.Age),"21",false)
-                .WhereLeftLike(nameof(member.Name),"gdet")
-                .ToNotOrJoin()
-                .AddTheSubWheres(
-                    s=>s
-                        .WhereBig(nameof(member.Age),84,false)
-                        .ToOrJoin()
-                        .WhereNotNull(nameof(member.ID))
-                    )
-                .ToAndJoin()
-                .WhereIn(nameof(member.Age),new List<string> { "gdag","gdhrre"})
-                .WhereIn(nameof(member.Age), new List<int> { 52,12 });
+           
 
-            Work work = new Work();
-            var tableWork = new SqlPatten<Work>(true)
-                .AddSelect(nameof(work.ID), "WorkID")
-                .AddSelect(nameof(work.MemberId), "ID")
-                .WhereSmall(nameof(work.WorkTimes), 7);
-            var joinTable = new JoinTable<Work>(tableWork)
-                .Join<Member>(new JoinTable<Member>(tableMember), TableJoinType.LeftJoin);
-
-            var sql = SqlString.ToSqlString(joinTable, s => s.Add(nameof(member.Name), OrderByType.Asc)
-                      .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
-            //var sql = SqlString.ToSqlString<MemberSql>(tableMember,
-            //    s => s.Add(nameof(member.Name), OrderByType.Asc)
-            //        .Add(nameof(member.CreateDate), OrderByType.Desc), 1, 20);
-
-            stopWatch.Stop();
-            Console.WriteLine("耗时：" + stopWatch.Elapsed);
-            Console.WriteLine(sql);
+            
 
             //PerformDatabaseOperations.TestOperations().Wait(); //async 方法必须显式wait才能等待输出结果
             //PerformDatabaseOperations.TestOperations();  //主线程会等待异步操作完成，可能是因为知道这是异步方法,测试时
