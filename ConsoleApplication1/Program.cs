@@ -8,6 +8,7 @@ using EntityFrameworkTest.Model;
 using EntityFrameworkTest.Context;
 using EntityFrameworkTest;
 using System.Diagnostics;
+using StackExchangeRedisTest;
 
 namespace TestConsole
 {
@@ -18,6 +19,9 @@ namespace TestConsole
             Stopwatch stopWatch = new Stopwatch(); //用户获取执行耗时
 
             // EntityFrameworkTestHelper.InitLoadData();
+
+            //需要测试RedisTTL时间
+            RedisHelper.StringSet("TestTime", "123456", Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
 
 
             Member testMember = new Member();
