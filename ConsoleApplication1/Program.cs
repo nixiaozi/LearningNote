@@ -9,6 +9,7 @@ using EntityFrameworkTest.Context;
 using EntityFrameworkTest;
 using System.Diagnostics;
 using StackExchangeRedisTest;
+using ADONetTest;
 
 namespace TestConsole
 {
@@ -16,13 +17,25 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            ADONetTestHelper.ADONetTestHelperDoing();
+
             Stopwatch stopWatch = new Stopwatch(); //用户获取执行耗时
+
 
             // EntityFrameworkTestHelper.InitLoadData();
 
             //需要测试RedisTTL时间
-            RedisHelper.StringSet("TestTime", "123456", Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+            // RedisHelper.StringSet("TestTime", "123456", Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+            RedisHelper.StringGet<string>("TestTime1", () =>
+            {
+                return "now is:" + DateTime.Now.ToShortTimeString();
+            }, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
 
+
+            RedisHelper.StringGet<string>("TestTime1", () =>
+            {
+                return "now is:" + DateTime.Now.ToShortTimeString();
+            }, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
 
             Member testMember = new Member();
 
