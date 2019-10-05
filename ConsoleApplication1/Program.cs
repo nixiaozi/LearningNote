@@ -17,7 +17,7 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            ADONetTestHelper.ADONetTestHelperDoing();
+            // ADONetTestHelper.ADONetTestHelperDoing();
 
             Stopwatch stopWatch = new Stopwatch(); //用户获取执行耗时
 

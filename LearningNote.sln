@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "ConsoleApplication1\TestConsole.csproj", "{C3879E81-8AA8-4637-A837-81DA4B09A740}"
 EndProject
@@ -26,6 +26,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqTest", "RabbitMqTest\RabbitMqTest.csproj", "{215FE420-ABEE-4320-AC99-43C7480960F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADONetTest", "ADONetTest\ADONetTest.csproj", "{8DBFFA34-019D-4010-8D15-73C80BEB47BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooKeeperTest", "ZooKeeperTest\ZooKeeperTest.csproj", "{8519D4F5-3F30-4EF4-9AF0-E423FDF74BFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RemoteProduceCallTest", "RemoteProduceCallTest", "{BC47207D-AF17-43E0-8A86-5026180A219E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rpcClient", "rpcClient\rpcClient.csproj", "{B37EA434-C280-42B1-9414-877CD47F50D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rpcServer", "rpcServer\rpcServer.csproj", "{FBEA7F53-6B17-4CED-8B99-79333149F293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,8 +89,27 @@ Global
 		{8DBFFA34-019D-4010-8D15-73C80BEB47BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DBFFA34-019D-4010-8D15-73C80BEB47BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DBFFA34-019D-4010-8D15-73C80BEB47BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8519D4F5-3F30-4EF4-9AF0-E423FDF74BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8519D4F5-3F30-4EF4-9AF0-E423FDF74BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8519D4F5-3F30-4EF4-9AF0-E423FDF74BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8519D4F5-3F30-4EF4-9AF0-E423FDF74BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37EA434-C280-42B1-9414-877CD47F50D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37EA434-C280-42B1-9414-877CD47F50D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37EA434-C280-42B1-9414-877CD47F50D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37EA434-C280-42B1-9414-877CD47F50D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEA7F53-6B17-4CED-8B99-79333149F293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEA7F53-6B17-4CED-8B99-79333149F293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEA7F53-6B17-4CED-8B99-79333149F293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEA7F53-6B17-4CED-8B99-79333149F293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B37EA434-C280-42B1-9414-877CD47F50D4} = {BC47207D-AF17-43E0-8A86-5026180A219E}
+		{FBEA7F53-6B17-4CED-8B99-79333149F293} = {BC47207D-AF17-43E0-8A86-5026180A219E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8A04A75-3088-441A-ADDB-9B85626D3916}
 	EndGlobalSection
 EndGlobal
