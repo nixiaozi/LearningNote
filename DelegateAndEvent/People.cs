@@ -13,14 +13,12 @@ namespace DelegateAndEvent
         public People()
         {
             toEat += () => { Console.WriteLine("Want To Eat !"); };
+            toEat += new eatHandler(delegate { Console.WriteLine("顾客要开始吃饭了！"); });
         }
 
         public void BeginDinner()
         {
-            if (toEat!=null)
-            {
-                toEat();
-            }
+            toEat?.Invoke(); //简化委托调用前为空判断
         }
 
 }
