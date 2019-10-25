@@ -13,7 +13,7 @@ namespace rpcServer
         {
             try
             {
-                IPAddress ipaddress = IPAddress.Parse("192.168.3.32");
+                IPAddress ipaddress = IPAddress.Parse("192.168.1.52");
                 TcpListener mylist = new TcpListener(ipaddress, 8000);
                 mylist.Start();
                 Console.WriteLine("Server is Runing on Port:8000");
