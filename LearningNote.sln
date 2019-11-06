@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rpcServer", "rpcServer\rpcS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegateAndEvent", "DelegateAndEvent\DelegateAndEvent.csproj", "{E1A5C6BD-5804-4398-AFEA-4684257CC834}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordTest", "WordTest\WordTest.csproj", "{71DA65EF-1E68-4002-A2C9-9275005BBEEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{E1A5C6BD-5804-4398-AFEA-4684257CC834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1A5C6BD-5804-4398-AFEA-4684257CC834}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1A5C6BD-5804-4398-AFEA-4684257CC834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DA65EF-1E68-4002-A2C9-9275005BBEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DA65EF-1E68-4002-A2C9-9275005BBEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DA65EF-1E68-4002-A2C9-9275005BBEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DA65EF-1E68-4002-A2C9-9275005BBEEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
