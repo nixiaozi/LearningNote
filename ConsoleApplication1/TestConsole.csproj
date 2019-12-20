@@ -72,6 +72,7 @@
     <Compile Include="AsyncDemo\Model.cs" />
     <Compile Include="AsyncDemo\PerformDatabaseOperations.cs" />
     <Compile Include="DateTimeToStr\MainAction.cs" />
+    <Compile Include="EnumTest\PersonType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectUsed\MainActionStrToMd5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

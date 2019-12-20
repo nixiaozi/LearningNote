@@ -10,6 +10,7 @@ using EntityFrameworkTest;
 using System.Diagnostics;
 using StackExchangeRedisTest;
 using ADONetTest;
+using ConsoleApplication1.EnumTest;
 
 namespace TestConsole
 {
@@ -20,22 +21,24 @@ namespace TestConsole
             // ADONetTestHelper.ADONetTestHelperDoing();
 
             Stopwatch stopWatch = new Stopwatch(); //用户获取执行耗时
+            //如何显示枚举的表面值和编号值
+            Console.WriteLine("PersonType.Student:" + PersonType.Student+";枚举值为："+Convert.ToInt32(PersonType.Student));
 
 
             // EntityFrameworkTestHelper.InitLoadData();
 
             //需要测试RedisTTL时间
             // RedisHelper.StringSet("TestTime", "123456", Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
-            RedisHelper.StringGet<string>("TestTime1", () =>
-            {
-                return "now is:" + DateTime.Now.ToShortTimeString();
-            }, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+            //RedisHelper.StringGet<string>("TestTime1", () =>
+            //{
+            //    return "now is:" + DateTime.Now.ToShortTimeString();
+            //}, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
 
 
-            RedisHelper.StringGet<string>("TestTime1", () =>
-            {
-                return "now is:" + DateTime.Now.ToShortTimeString();
-            }, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
+            //RedisHelper.StringGet<string>("TestTime1", () =>
+            //{
+            //    return "now is:" + DateTime.Now.ToShortTimeString();
+            //}, Convert.ToInt32((DateTime.Today.AddDays(1) - DateTime.Now).TotalMinutes));
 
             Member testMember = new Member();
 
