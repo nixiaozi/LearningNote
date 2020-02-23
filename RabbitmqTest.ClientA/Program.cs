@@ -13,14 +13,21 @@ namespace RabbitmqTest.ClientA
             using(var channel = connection.CreateModel())
             {
                 //定义一个队列，队列名为hello
-                channel.QueueDeclare(queue: "hello", durable: false, exclusive: false,
-                    autoDelete: false, arguments: null);
+                channel.QueueDeclare(
+                    queue: "hello", 
+                    durable: false, 
+                    exclusive: false,
+                    autoDelete: false, 
+                    arguments: null);
 
                 string message = "Hello World!";
                 var body = Encoding.UTF8.GetBytes(message);
 
 
-                channel.BasicPublish(exchange: "", routingKey: "hello", basicProperties: null,
+                channel.BasicPublish(
+                    exchange: "", 
+                    routingKey: "hello", 
+                    basicProperties: null,
                     body: body);
 
                 Console.WriteLine(" [x] Sent {0}",message);
