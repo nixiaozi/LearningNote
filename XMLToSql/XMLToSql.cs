@@ -13,5 +13,12 @@ namespace XMLToSql
 
         }
 
+
+
+        ~XMLToSql()
+        {
+            //这是一个析构方法；
+        }
+
     }
 }
