@@ -17,6 +17,11 @@ namespace ClassConvertOverLoadConsole
 
             Console.WriteLine((new Point(1, 4) + new Point(8, 5)).x);
 
+            var x = new Point(1, 2);
+
+            Console.WriteLine((x++).x);
+            Console.WriteLine((++x).x);
+
         }
     }
 
@@ -25,8 +30,8 @@ namespace ClassConvertOverLoadConsole
     {
         public int x;
         public int y;
-        
-        public Point(int x,int y)
+
+        public Point(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -34,12 +39,22 @@ namespace ClassConvertOverLoadConsole
 
         public static Point operator +(Point a, Point b)
         {
-            return new Point(a.x+b.x,b.y+a.y);
+            return new Point(a.x + b.x, b.y + a.y);
         }
 
+
+        public static Point operator ++(Point a)
+        {
+            return a + a;
+        }
 
 
     }
 
+
+    public interface ITodo
+    {
+        public void It() { }
+    }
 
 }

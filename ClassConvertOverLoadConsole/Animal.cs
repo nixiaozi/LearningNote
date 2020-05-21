@@ -28,6 +28,13 @@ namespace ClassConvertOverLoadConsole
 
     public class Dog : Animal
     {
+        //会报错指定了多个入口点
+        //static void Main(string[] args)
+        //{
+        //    Console.WriteLine("Hello Animal!");
+        //}
+
+
         public Dog():base()
         {
             this.LeiName = "Dog";
