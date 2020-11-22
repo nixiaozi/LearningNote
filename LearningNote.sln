@@ -63,7 +63,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassConvertOverLoadConsole
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MutilClassPropCombineTest", "MutilClassPropCombineTest", "{767C79E6-3C6C-4887-8524-84DF95B47C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutilClassPropCombine", "MutilClassPropCombine\MutilClassPropCombine.csproj", "{C1B52BCA-E43C-408E-8392-90B906FAE53D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MutilClassPropCombine", "MutilClassPropCombine\MutilClassPropCombine.csproj", "{C1B52BCA-E43C-408E-8392-90B906FAE53D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Goldbach", "Goldbach", "{D2B8103F-8A1C-4C9B-9F1D-9C73702821E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldbachTest", "GoldbachTest\GoldbachTest.csproj", "{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,6 +167,10 @@ Global
 		{C1B52BCA-E43C-408E-8392-90B906FAE53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B52BCA-E43C-408E-8392-90B906FAE53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B52BCA-E43C-408E-8392-90B906FAE53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +190,8 @@ Global
 		{A85E3FF1-49B0-4B12-8639-98266FA74AB1} = {FB00EA01-D9D1-4CE7-A412-9DEE2C6577F5}
 		{767C79E6-3C6C-4887-8524-84DF95B47C82} = {1AE69541-D081-4F4A-8099-815E51469C1E}
 		{C1B52BCA-E43C-408E-8392-90B906FAE53D} = {767C79E6-3C6C-4887-8524-84DF95B47C82}
+		{D2B8103F-8A1C-4C9B-9F1D-9C73702821E8} = {1AE69541-D081-4F4A-8099-815E51469C1E}
+		{B28A7F0A-2BD6-42D3-B1A7-46A3C8186214} = {D2B8103F-8A1C-4C9B-9F1D-9C73702821E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8A04A75-3088-441A-ADDB-9B85626D3916}
