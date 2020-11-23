@@ -16,18 +16,21 @@ namespace GoldbachTest
             //PrimeData.PrintRangePrimes();
 
             //PrimeData.GetEvenToTwoPrimesSum(14);
-            var i = 3;
-            for(; ; )
-            {
-                Console.WriteLine("现在测试数字"+i+":");
-                
-                Thread.Sleep(2000);
-                PrimeData.GetOddSymmetryPrimesPair(i);
-                Console.WriteLine();
-                i = i + 2;
-            }
 
-            // PrimeData.GetOddSymmetryPrimesPair(19);
+
+            //var i = 3;
+            //for(; ; )
+            //{
+            //    Console.WriteLine("现在测试数字"+i+":");
+                
+            //    Thread.Sleep(2000);
+            //    PrimeData.GetOddSymmetryPrimesPair(i);
+            //    Console.WriteLine();
+            //    i = i + 2;
+            //}
+
+            PrimeData.GetOddSymmetryPrimesPair(5*7*11*13*17*61);
+
 
         }
     }
