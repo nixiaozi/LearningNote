@@ -160,7 +160,7 @@ namespace GoldbachTest
             }
 
         }
-
+        
         // 获取以某奇数为对称轴的质数对
         public static void GetOddSymmetryPrimesPair(int OddData)
         {
@@ -193,6 +193,10 @@ namespace GoldbachTest
             
 
         }
+
+
+
+
 
     }
 }

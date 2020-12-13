@@ -15,7 +15,7 @@ namespace GoldbachTest
 
             //PrimeData.PrintRangePrimes();
 
-            //PrimeData.GetEvenToTwoPrimesSum(14);
+            PrimeData.GetEvenToTwoPrimesSum(154);
 
 
             //var i = 3;
@@ -29,7 +29,7 @@ namespace GoldbachTest
             //    i = i + 2;
             //}
 
-            PrimeData.GetOddSymmetryPrimesPair(5*7*11*13*17*61);
+            //PrimeData.GetOddSymmetryPrimesPair(5*7*11*13*17*61);
 
 
         }
