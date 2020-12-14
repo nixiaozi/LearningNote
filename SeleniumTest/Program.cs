@@ -19,7 +19,8 @@ namespace SeleniumTest
             //chromeOptions.AddArgument("user-agent=whatever you want"); 
             ///
 
-            chromeOptions.AddArgument("cookie=dgisagegihdsghruoghreghuerhguhddshgurguhrgfddfg");
+                
+            // chromeOptions.AddArgument("cookie=dgisagegihdsghruoghreghuerhguhddshgurguhrgfddfg"); // 并不是正确添加cookie的方法
 
 
 
@@ -30,6 +31,7 @@ namespace SeleniumTest
 
             driver.Manage().Window.Size = new Size(1024, 768); // 这个是手动调整浏览器窗口的大小，小的浏览器窗口可能导致自动跳转移动端网站
 
+            #region 基础的 webdriver 浏览操作
             /// 以下是基础的 webdriver 浏览操作
             driver.Navigate().GoToUrl(@"http://www.taobao.com"); // C# 不支持driver.get("https://selenium.dev"); 这种方式
 
@@ -89,8 +91,13 @@ namespace SeleniumTest
             // Opens a new window and switches to new window
             driver.SwitchTo().NewWindow(WindowType.Window);*/
 
+            #endregion
 
-
+            var thecookie = new Cookie("aa", "bbbc");
+            driver.Manage().Cookies.AddCookie(thecookie);
+            driver.Manage().Cookies.AddCookie(new Cookie("bb","cccde"));
+            var allCookies = driver.Manage().Cookies.AllCookies;
+            driver.Manage().Cookies.DeleteAllCookies(); // 删除所有的Cookies
 
 
             driver.Quit();
