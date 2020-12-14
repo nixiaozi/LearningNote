@@ -93,25 +93,19 @@ namespace SeleniumTest
 
             #endregion
 
+            #region Cookie相关操作
             var thecookie = new Cookie("aa", "bbbc");
             driver.Manage().Cookies.AddCookie(thecookie);
             driver.Manage().Cookies.AddCookie(new Cookie("bb","cccde"));
             var allCookies = driver.Manage().Cookies.AllCookies;
             driver.Manage().Cookies.DeleteAllCookies(); // 删除所有的Cookies
 
+            #endregion
 
-            driver.Quit();
-
-
-
-            
 
 
 
-            
-            
-            
-
+            driver.Quit();
 
 
 
