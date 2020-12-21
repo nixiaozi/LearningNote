@@ -47,7 +47,7 @@ namespace SeleniumTest
             driver.Navigate().Back();
             Debug.Print("当前浏览器地址为2==>" + driver.Url);
 
-            //向前
+            //向前 
             driver.Navigate().Forward();
             Debug.Print("当前浏览器地址为3==>" + driver.Url);
 
@@ -99,6 +99,7 @@ namespace SeleniumTest
             driver.Manage().Cookies.AddCookie(new Cookie("bb","cccde"));
             var allCookies = driver.Manage().Cookies.AllCookies;
             driver.Manage().Cookies.DeleteAllCookies(); // 删除所有的Cookies
+            driver.
 
             #endregion
 
