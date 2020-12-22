@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BenderProxy;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -14,20 +15,39 @@ namespace SeleniumTest
         {
             Console.WriteLine("Hello World!");
 
+            // 添加一个代理服务器
+            HttpProxyServer proxyServer = new HttpProxyServer("localhost", new HttpProxy(19991));
+            proxyServer.Start().WaitOne();
+            // proxyServer.Start();
+            Console.WriteLine("Started on port {0}", proxyServer.ProxyEndPoint.Port);
+
+            //proxyServer.Proxy.OnResponseSent = SeleniumProxyTest.OnResponseSent;
+            //proxyServer.Proxy.OnResponseReceived = SeleniumProxyTest.OnResponseReceived;
+            //proxyServer.Proxy.OnRequestReceived = SeleniumProxyTest.OnRequestReceived;
+
+
             // 添加自己的User Agent  https://stackoverflow.com/questions/29916054/change-user-agent-for-selenium-web-driver
             ChromeOptions chromeOptions = new ChromeOptions();
+            Proxy proxy = new Proxy();
+            proxy.HttpProxy = string.Format("{0}:{1}", "127.0.0.1", proxyServer.ProxyEndPoint.Port);
+            chromeOptions.Proxy = proxy;   // 为Webdriver 添加代理来访问网站
+            chromeOptions.UseSpecCompliantProtocol = true; // Force spec-compliant protocol dialect for now.
             //chromeOptions.AddArgument("user-agent=whatever you want"); 
             ///
 
-                
+
             // chromeOptions.AddArgument("cookie=dgisagegihdsghruoghreghuerhguhddshgurguhrgfddfg"); // 并不是正确添加cookie的方法
 
 
 
-            
+
 
 
             var driver = new ChromeDriver(chromeOptions);
+
+
+            
+
 
             driver.Manage().Window.Size = new Size(1024, 768); // 这个是手动调整浏览器窗口的大小，小的浏览器窗口可能导致自动跳转移动端网站
 
@@ -99,7 +119,6 @@ namespace SeleniumTest
             driver.Manage().Cookies.AddCookie(new Cookie("bb","cccde"));
             var allCookies = driver.Manage().Cookies.AllCookies;
             driver.Manage().Cookies.DeleteAllCookies(); // 删除所有的Cookies
-            driver.
 
             #endregion
 
@@ -111,5 +130,11 @@ namespace SeleniumTest
 
 
         }
+
+
+        
     }   
+
+
+    
 }
