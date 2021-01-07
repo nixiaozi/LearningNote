@@ -70,8 +70,6 @@ namespace TaskBasedAsyncProgramming
                 //Wre we alread canceled?
                 ct.ThrowIfCancellationRequested();
 
-                Console.WriteLine("此时还没有发起取消任务");
-
                 bool moreToDo = true;
                 while (moreToDo)
                 {
@@ -81,7 +79,7 @@ namespace TaskBasedAsyncProgramming
                     if (ct.IsCancellationRequested)
                     {
                         //Clean up hrer,then...
-                        ct.ThrowIfCancellationRequested();
+                        ct.ThrowIfCancellationRequested(); //抛出 RequestCancelled 异常，强行中断循环
                     }
                 }
             }, tokenSource2.Token);

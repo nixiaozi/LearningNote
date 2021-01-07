@@ -22,12 +22,15 @@ namespace TaskBasedAsyncProgramming
         {
             Thread.CurrentThread.Name = "Main";
             // Create a task and supply a user delegate by using a lambda expression.
-            Task taskA = new Task(() => Console.WriteLine("Hello from taskA."));
+            Task taskA = new Task(() => {
+                    Thread.CurrentThread.Name = "TaskA";
+                    Console.WriteLine("Hello from {0}.线程ID为：{1}", Thread.CurrentThread.Name, Thread.CurrentThread.ManagedThreadId);
+                });
             // Start the task.
             taskA.Start();
             // Output a message from the calling thread.
-            Console.WriteLine("Hello from thread '{0}'.",
-            Thread.CurrentThread.Name);
+            Console.WriteLine("Hello from thread '{0}'.with ThreadID is:{1}",
+            Thread.CurrentThread.Name, Thread.CurrentThread.ManagedThreadId);
 
             //强制等待taskA执行完成之后，才执行下面的操作
             taskA.Wait();

@@ -121,10 +121,6 @@
       <Project>{E5A83502-DD4D-49CB-A99A-5E9E4F331AD0}</Project>
       <Name>StackExchangeRedisTest</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TaskBasedAsyncProgramming\TaskBasedAsyncProgramming.csproj">
-      <Project>{d09f5ba2-242b-4c1e-807d-f3a618fd3f8a}</Project>
-      <Name>TaskBasedAsyncProgramming</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TaskParallelLibraryDataflow\TaskParallelLibraryDataflow.csproj">
       <Project>{A984A28A-239D-43C4-AC8D-DD11B5296E61}</Project>
       <Name>TaskParallelLibraryDataflow</Name>
