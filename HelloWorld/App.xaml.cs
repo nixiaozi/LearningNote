@@ -20,6 +20,12 @@ namespace HelloWorld
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            // 实验证明 同预想，构造函数会先于 Application_Startup 执行
+            Debug.Print("do method ==>App Init");
+        }
+
         private ServiceProvider _serviceProvider;
 
         private IServiceProvider _iServiceProvider;
@@ -62,6 +68,7 @@ namespace HelloWorld
 
         private void Application_Startup(object sender, StartupEventArgs e) // 这个方法会在构造函数APP()之前执行
         {
+            Debug.Print("do method ==> Application_Startup");
             DoApp();
             #region 错误示范，这是在main函数中定义的
             //var builder = new HostBuilder()
