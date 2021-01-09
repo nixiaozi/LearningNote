@@ -2,8 +2,15 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.3" />
+  </ItemGroup>
+
 
 </Project>
