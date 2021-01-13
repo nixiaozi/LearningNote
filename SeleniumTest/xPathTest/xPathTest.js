@@ -1,5 +1,5 @@
-﻿
-
+﻿// 下面的链接是这个函数的核心document.evalute的使用方法
+// https://developer.mozilla.org/en-US/docs/Web/API/Document/evaluate
 function xpathTest(str = "/html/body//*[text()]") {
     var headings = document.evaluate(str, document, null, XPathResult.ANY_TYPE, null);
     /* Search the document for all h2 elements.
@@ -17,6 +17,26 @@ function xpathTest(str = "/html/body//*[text()]") {
     // alert("总共找到了" + count + "个元素");
     console.info(alertText);
 }
+
+// chrome snaip version
+function xpathTest(str = "/html/body//*[text()]") {
+    var headings = document.evaluate(str, document, null, XPathResult.ANY_TYPE, null);
+    /* Search the document for all h2 elements.
+     * The result will likely be an unordered node iterator. */
+    var thisHeading = headings.iterateNext();
+    var alertText = "selected nodes in this document are:\n";
+    var count = 0;
+    while (thisHeading) {
+        console.log(thisHeading);
+        alertText += thisHeading.textContent.trim() + "\n";
+        thisHeading = headings.iterateNext();
+        count++
+    }
+    // alert(alertText); // Alerts the text of all Selected elements
+    alert("总共找到了" + count + "个元素");
+    //console.info(alertText);
+}
+
 
 xpathTest("/html/body//*[text()]") // 获取html-- body 节点下的所有文本内容
 xpathTest("/html/body//img")  // 获取body节点下的所有图片 img节点
