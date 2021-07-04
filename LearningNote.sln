@@ -95,7 +95,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "HelloWorld\He
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaMvvmTest", "AvaloniaMvvmTest\AvaloniaMvvmTest.csproj", "{A900AE60-B958-4F9F-8FD9-F63743913C34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutilateThreadTest", "MutilateThreadTest\MutilateThreadTest.csproj", "{F96F1EBC-00FC-4925-83C7-5AE66F920570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MutilateThreadTest", "MutilateThreadTest\MutilateThreadTest.csproj", "{F96F1EBC-00FC-4925-83C7-5AE66F920570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BilibiliTest", "BilibiliTest\BilibiliTest.csproj", "{94251541-419A-4484-9F14-08FC3DCEB676}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -235,6 +237,10 @@ Global
 		{F96F1EBC-00FC-4925-83C7-5AE66F920570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F96F1EBC-00FC-4925-83C7-5AE66F920570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F96F1EBC-00FC-4925-83C7-5AE66F920570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94251541-419A-4484-9F14-08FC3DCEB676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94251541-419A-4484-9F14-08FC3DCEB676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94251541-419A-4484-9F14-08FC3DCEB676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94251541-419A-4484-9F14-08FC3DCEB676}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +275,7 @@ Global
 		{FC42F59C-AF51-4CD6-8488-B1513DF9EC54} = {E883C40B-7F32-47B2-A5CD-6BFD590ECBB5}
 		{A900AE60-B958-4F9F-8FD9-F63743913C34} = {E883C40B-7F32-47B2-A5CD-6BFD590ECBB5}
 		{F96F1EBC-00FC-4925-83C7-5AE66F920570} = {1AE69541-D081-4F4A-8099-815E51469C1E}
+		{94251541-419A-4484-9F14-08FC3DCEB676} = {F0B5AE6F-CD83-4000-AB8B-190C77D3105E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8A04A75-3088-441A-ADDB-9B85626D3916}
